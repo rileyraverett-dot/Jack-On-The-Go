@@ -561,6 +561,73 @@ color: var(--text);
 background: rgba(255,255,255,0.10);
 border: 1px solid rgba(255,255,255,0.18);
 }
+  .request-btn{
+margin-top:14px;
+width:100%;
+border:none;
+border-radius:14px;
+padding:12px 12px;
+font-weight:900;
+cursor:pointer;
+color: var(--text);
+background: rgba(255, 214, 0, 0.14);
+border: 1px solid rgba(255, 214, 0, 0.30);
+}
+.modal{ position:fixed; inset:0; background:rgba(0,0,0,.55); display:flex; align-items:center; justify-content:center; z-index:9999; }
+.modal-content{
+width:min(520px, 92%);
+border-radius:18px;
+padding:16px;
+background: rgba(255,255,255,0.07);
+border: 1px solid rgba(255,255,255,0.14);
+backdrop-filter: blur(16px);
+box-shadow: 0 18px 70px rgba(0,0,0,0.55);
+color:#fff;
+}
+  .admin-card{ margin-top:14px; padding:14px; border-radius:16px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); backdrop-filter: blur(14px); }
+.admin-card-title{ font-weight:900; margin-bottom:10px; }
+.admin-row{ display:flex; gap:10px; margin-top:10px; }
+.admin-input{ flex:1; padding:12px; border-radius:12px; border:1px solid rgba(255,255,255,.14); background:rgba(0,0,0,.35); color:#fff; }
+.admin-btn{ padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.10); color:#fff; font-weight:900; cursor:pointer; }
+.admin-btn.wide{ width:100%; }
+
+.admin-ticker{
+margin-top:12px;
+padding:10px 12px;
+border-radius:14px;
+background: rgba(255, 214, 0, 0.12);
+border: 1px solid rgba(255, 214, 0, 0.28);
+font-weight:900;
+white-space:nowrap;
+overflow:hidden;
+}
+.admin-ticker::after{
+content: attr(data-text);
+display:inline-block;
+padding-left: 40px;
+animation: tickerScroll 12s linear infinite;
+}
+@keyframes tickerScroll{
+from{ transform: translateX(0); }
+to{ transform: translateX(-60%); }
+}
+
+.profit-top{ display:flex; align-items:flex-end; justify-content:space-between; gap:12px; margin-bottom:10px; }
+.profit-ticker{ font-size:28px; font-weight:1000; }
+.profit-meta{ opacity:.75; font-size:12px; }
+
+.daily-target{
+margin-top:10px;
+padding:10px 12px;
+border-radius:14px;
+background: rgba(56,214,107,0.10);
+border: 1px solid rgba(56,214,107,0.18);
+font-weight:900;
+}
+
+.tabs{ display:flex; gap:8px; flex-wrap:wrap; }
+.tab{ padding:10px 12px; border-radius:12px; border:1px solid rgba(255,255,255,.14); background:rgba(0,0,0,.28); color:#fff; font-weight:900; cursor:pointer; }
+.tabpanel{ display:none; margin-top:12px; }
 </style>
 </head>
 
@@ -632,6 +699,20 @@ border: 1px solid rgba(255,255,255,0.18);
 <div class="menu-item"><span>Ice Breakers Cube</span><b>$6</b></div>
 </div>
 
+  <button class="request-btn" onclick="openRequest()">➕ Request an item</button>
+
+<div id="requestModal" class="modal" style="display:none;">
+<div class="modal-content">
+<h3 style="margin:0 0 10px;">Request an item</h3>
+<p style="opacity:.75; margin:0 0 10px;">Type what you want added. If 5+ people request the same thing, admin will see it.</p>
+<input id="requestInput" type="text" placeholder="ex: Takis, Dr Pepper, Gatorade..." style="width:100%; padding:12px; border-radius:12px; border:1px solid rgba(255,255,255,.15); background:rgba(0,0,0,.35); color:#fff;"/>
+<div style="display:flex; gap:10px; margin-top:12px;">
+<button class="menu-link" style="flex:1;" onclick="submitRequest()">Submit</button>
+<button class="menu-link" style="flex:1;" onclick="closeRequest()">Cancel</button>
+</div>
+</div>
+</div>
+  
 <button class="menu-close" onclick="toggleMenu(false)">Close</button>
 </div>
 </div>
@@ -734,6 +815,66 @@ border: 1px solid rgba(255,255,255,0.18);
         <button class="action submit" onclick="wipeAll()">Wipe Device Data</button>
       </div>
     </div>
+    <!-- ADMIN ALERT TICKER (requests) -->
+<div id="adminTicker" class="admin-ticker" style="display:none;"></div>
+
+<!-- SALES ENTRY -->
+<div class="admin-card">
+<div class="admin-card-title">Record a sale</div>
+
+<div class="admin-row">
+<select id="saleItem" class="admin-input"></select>
+<input id="saleQty" class="admin-input" type="number" min="1" value="1" />
+<button class="admin-btn" onclick="recordSale()">Buy</button>
+</div>
+
+<div class="admin-row">
+<input id="saleNote" class="admin-input" placeholder="optional note (who/where)" />
+</div>
+</div>
+
+<!-- PROFIT SUMMARY -->
+<div class="admin-card">
+<div class="admin-card-title">Profit Tracker</div>
+
+<div class="profit-top">
+<div class="profit-ticker" id="profitTicker">$0.00</div>
+<div class="profit-meta" id="profitMeta">Today: $0 • Week: $0</div>
+</div>
+
+<canvas id="profitChart" height="140"></canvas>
+
+<div class="daily-target" id="dailyTarget">
+Today’s target: —
+</div>
+</div>
+
+<!-- ANALYTICS DROPDOWN -->
+<div class="admin-card">
+<button class="admin-btn wide" onclick="toggleAnalytics()">📊 Analytics (open/close)</button>
+
+<div id="analyticsPanel" style="display:none; margin-top:12px;">
+<div class="tabs">
+<button class="tab" onclick="showTab('mrr')">MRR Waterfall</button>
+<button class="tab" onclick="showTab('nrr')">NRR</button>
+<button class="tab" onclick="showTab('growth')">Cumulative ARR/MRR</button>
+<button class="tab" onclick="showTab('hot')">HOT Items</button>
+</div>
+
+<div class="tabpanel" id="tab-mrr"><canvas id="mrrChart" height="160"></canvas></div>
+<div class="tabpanel" id="tab-nrr"><canvas id="nrrChart" height="160"></canvas></div>
+<div class="tabpanel" id="tab-growth"><canvas id="growthChart" height="160"></canvas></div>
+<div class="tabpanel" id="tab-hot"><canvas id="hotChart" height="160"></canvas></div>
+</div>
+</div>
+
+<!-- COST SETTINGS (editable) -->
+<div class="admin-card">
+<div class="admin-card-title">Cost settings (edit anytime)</div>
+<p style="opacity:.75; margin:0 0 10px;">These are used to compute profit (revenue − cost).</p>
+<div id="costEditor"></div>
+<button class="admin-btn wide" onclick="saveCosts()">Save Costs</button>
+</div>
   </div>
 
   <!-- TEXT MODAL -->
@@ -936,13 +1077,14 @@ function cryptoId(){
 
 /*** ADMIN ***/
 function adminLogin(){
-  const code = document.getElementById("adminCode").value.trim();
-  if(code === ADMIN_CODE){
-    loadAdmin();
-    show("adminPanel");
-  } else {
-    alert("Wrong code.");
-  }
+const code = document.getElementById("adminCode").value.trim();
+if(code === ADMIN_CODE){
+loadAdmin();
+show("adminPanel");
+initAdminDashboard(); // ✅ add this line
+} else {
+alert("Wrong code.");
+}
 }
 function closeAdmin(){
   hide("adminPanel");
@@ -1200,6 +1342,392 @@ function downloadFile(filename, content, type){
   a.click();
   URL.revokeObjectURL(url);
 }
+  function openRequest(){ document.getElementById("requestModal").style.display="flex"; }
+function closeRequest(){ document.getElementById("requestModal").style.display="none"; }
+
+function normItem(s){
+return (s||"")
+.toLowerCase()
+.replace(/[^a-z0-9\s]/g,"")
+.replace(/\s+/g," ")
+.trim();
+}
+
+function getRequests(){ return JSON.parse(localStorage.getItem("itemRequests")||"[]"); }
+function setRequests(x){ localStorage.setItem("itemRequests", JSON.stringify(x)); }
+
+function submitRequest(){
+const raw = document.getElementById("requestInput").value;
+const n = normItem(raw);
+if(!n){ alert("Type an item first"); return; }
+const reqs = getRequests();
+reqs.push({ raw, n, ts: Date.now() });
+setRequests(reqs);
+document.getElementById("requestInput").value="";
+closeRequest();
+alert("Request submitted 👀");
+}
+  // ---------- DATA MODELS ----------
+const DEFAULT_ITEMS = [
+// name, sellPrice, casePackUnits, casePackCost
+// (these costs are starting guesses from common retailers; you can edit in admin)
+{ key:"redbull_original", name:"Redbull (original)", sell:4.50, units:24, cost:48.67 }, // example [oai_citation:10‡Walmart.com](https://www.walmart.com/ip/Red-Bull-Energy-Drink-8-4-fl-oz-Pack-of-24-Cans/26779613?utm_source=chatgpt.com)
+{ key:"redbull_red", name:"Redbull (red)", sell:4.95, units:24, cost:63.00 }, // example [oai_citation:11‡Walmart.com](https://www.walmart.com/ip/Red-Bull-Red-Edition-Watermelon-Energy-Drink-8-4-fl-oz-Pack-of-24-Cans/297276472?utm_source=chatgpt.com)
+{ key:"monster_white", name:"Monster (white)", sell:6.00, units:24, cost:42.48 }, // example [oai_citation:12‡Sam's Club](https://www.samsclub.com/ip/monster-zero-ultra-energy-drink-24pk-16oz-can/7084701554?utm_source=chatgpt.com)
+
+{ key:"coke", name:"Coke (original)", sell:3.00, units:24, cost:14.77 }, // example [oai_citation:13‡Walmart.com](https://www.walmart.com/ip/Coca-Cola-Classic-Soda-Pop-12-fl-oz-Cans-24-Pack/10535216?utm_source=chatgpt.com)
+{ key:"fanta", name:"Fanta (original)", sell:3.75, units:24, cost:14.77 }, // example [oai_citation:14‡Walmart.com](https://www.walmart.com/ip/Fanta-Orange-Fruit-Soda-Pop-12-fl-oz-24-Pack-Cans/10535174?utm_source=chatgpt.com)
+{ key:"mtndew", name:"Mtn Dew (original)", sell:5.00, units:24, cost:12.48 }, // example [oai_citation:15‡Walmart.com](https://www.walmart.com/ip/Caffeine-Free-Mountain-Dew-Citrus-Soda-12-oz-24-Cans/17787301?utm_source=chatgpt.com)
+
+// Snacks are often bought in 40ct school multipacks
+{ key:"doritos_nacho", name:"Doritos (nacho)", sell:3.75, units:40, cost:19.20 }, // 40ct example [oai_citation:16‡Amazon](https://www.amazon.com/Doritos-Nacho-Cheese-Flavored-Tortilla/dp/B072C8HBGW?utm_source=chatgpt.com)
+{ key:"doritos_blue", name:"Doritos (blue)", sell:4.25, units:40, cost:19.20 }, // treat as same cost baseline
+{ key:"funyun", name:"Funyun", sell:4.90, units:40, cost:13.45 }, // example [oai_citation:17‡Walmart.com](https://www.walmart.com/ip/Funyuns-Onion-Flavored-Rings-0-75-Ounce-Bags-Pack-of-40/936002814?utm_source=chatgpt.com)
+{ key:"hot_cheetos", name:"Hot Cheetos", sell:5.00, units:40, cost:31.80 }, // multipack example [oai_citation:18‡Walmart.com](https://www.walmart.com/ip/Cheetos-Crunchy-Flamin-Hot-Cheese-Flavored-Snacks-1-oz-40-Count/1532599643?utm_source=chatgpt.com)
+
+// Gum (not really “24 pack”; we still model a bulk pack)
+{ key:"spearmint", name:"Spearmint", sell:3.00, units:40, cost:18.99 }, // bulk pack example [oai_citation:19‡Costco Business Center](https://www.costcobusinessdelivery.com/wrigleys-spearmint-chewing-gum%2C-original-50-cent-gum%2C-5-sticks%2C-40-ct.product.10178478.html?utm_source=chatgpt.com)
+{ key:"hubba", name:"Hubba Bubba", sell:3.75, units:12, cost:11.49 }, // 12 pk example [oai_citation:20‡Sam's Club](https://www.samsclub.com/ip/bubble-tape-asst-12-pk/2200001772?utm_source=chatgpt.com)
+{ key:"ice_breakers", name:"Ice Breakers Cube", sell:6.00, units:100, cost:8.37 }, // 100ct pouch example [oai_citation:21‡Walmart.com](https://www.walmart.com/ip/Ice-Breakers-Ice-Cubes-Spearmint-Sugar-Free-Chewing-Gum-Pouch-8-11-oz-100-Pieces/106667580?utm_source=chatgpt.com)
+];
+
+function loadItems(){
+const saved = localStorage.getItem("itemsCatalog");
+return saved ? JSON.parse(saved) : DEFAULT_ITEMS;
+}
+function saveItems(items){
+localStorage.setItem("itemsCatalog", JSON.stringify(items));
+}
+
+function loadSales(){
+return JSON.parse(localStorage.getItem("salesLog")||"[]");
+}
+function saveSales(sales){
+localStorage.setItem("salesLog", JSON.stringify(sales));
+}
+
+// ---------- ADMIN UI INIT ----------
+let items = loadItems();
+let charts = {};
+
+function money(x){
+return (x||0).toLocaleString(undefined,{style:"currency",currency:"USD"});
+}
+
+function unitCost(item){
+return item.cost / item.units; // cost per unit
+}
+
+function populateSaleDropdown(){
+const sel = document.getElementById("saleItem");
+if(!sel) return;
+sel.innerHTML = items.map(i => `<option value="${i.key}">${i.name} (${money(i.sell)})</option>`).join("");
+}
+
+function renderCostEditor(){
+const wrap = document.getElementById("costEditor");
+if(!wrap) return;
+wrap.innerHTML = items.map(i => `
+<div style="display:grid; grid-template-columns: 1.4fr .8fr .8fr; gap:10px; margin-top:10px;">
+<div class="admin-input" style="display:flex; align-items:center;">${i.name}</div>
+<input class="admin-input" type="number" step="0.01" id="cost_${i.key}" value="${i.cost}">
+<input class="admin-input" type="number" step="1" id="units_${i.key}" value="${i.units}">
+</div>
+<div style="opacity:.65; font-size:12px; margin-top:4px;">
+Cost per unit: <b>${money(unitCost(i))}</b> • Sell: <b>${money(i.sell)}</b> • Margin: <b>${money(i.sell - unitCost(i))}</b>
+</div>
+`).join("");
+}
+
+function saveCosts(){
+items = items.map(i => ({
+...i,
+cost: parseFloat(document.getElementById(`cost_${i.key}`).value || i.cost),
+units: parseFloat(document.getElementById(`units_${i.key}`).value || i.units),
+}));
+saveItems(items);
+alert("Saved ✅");
+refreshAllAdmin();
+}
+
+// ---------- SALES ----------
+function recordSale(){
+const key = document.getElementById("saleItem").value;
+const qty = Math.max(1, parseInt(document.getElementById("saleQty").value||"1",10));
+const note = (document.getElementById("saleNote").value||"").trim();
+const item = items.find(i=>i.key===key);
+if(!item) return;
+
+const sales = loadSales();
+sales.push({
+ts: Date.now(),
+key,
+name: item.name,
+qty,
+sell: item.sell,
+costPer: unitCost(item),
+note
+});
+saveSales(sales);
+
+document.getElementById("saleQty").value = 1;
+document.getElementById("saleNote").value = "";
+refreshAllAdmin();
+}
+
+// ---------- PROFIT CALCS ----------
+function startOfDay(ts){
+const d = new Date(ts);
+d.setHours(0,0,0,0);
+return d.getTime();
+}
+function startOfWeek(ts){
+const d = new Date(ts);
+const day = d.getDay(); // 0 Sun ... 6 Sat
+// School week: Mon-Fri. We'll treat week start as Monday.
+const diffToMon = (day === 0 ? -6 : 1 - day);
+d.setDate(d.getDate() + diffToMon);
+d.setHours(0,0,0,0);
+return d.getTime();
+}
+function isSellDay(dateObj){
+const day = dateObj.getDay();
+return day !== 0 && day !== 6; // no Sun/Sat
+}
+function remainingSellDaysThisWeek(nowTs){
+const now = new Date(nowTs);
+let count = 0;
+const d = new Date(now);
+d.setHours(0,0,0,0);
+// include today if weekday
+for(let i=0;i<7;i++){
+const test = new Date(d);
+test.setDate(d.getDate()+i);
+if(test.getTime() < startOfWeek(nowTs)) continue;
+if(test.getTime() > startOfWeek(nowTs)+6*86400000) break;
+if(test >= new Date(now.setHours(0,0,0,0)) && isSellDay(test)) count++;
+}
+return Math.max(1, count);
+}
+
+function profitForRange(sales, fromTs, toTs){
+let rev=0, cogs=0;
+for(const s of sales){
+if(s.ts>=fromTs && s.ts<toTs){
+rev += s.sell * s.qty;
+cogs += s.costPer * s.qty;
+}
+}
+return { rev, cogs, profit: rev - cogs };
+}
+
+function dailyProfitSeries(daysBack=7){
+const sales = loadSales();
+const now = Date.now();
+const series = [];
+for(let i=daysBack-1;i>=0;i--){
+const dayStart = startOfDay(now - i*86400000);
+const dayEnd = dayStart + 86400000;
+const p = profitForRange(sales, dayStart, dayEnd).profit;
+series.push({ dayStart, profit:p });
+}
+return series;
+}
+
+// ---------- REQUEST TICKER FOR ADMIN ----------
+function computeTopRequests(threshold=5){
+const reqs = getRequests();
+const map = new Map();
+
+for(const r of reqs){
+// super simple similarity bucket: first 18 chars normalized
+const bucket = r.n.slice(0,18);
+map.set(bucket, (map.get(bucket)||0) + 1);
+}
+
+let best = null;
+for(const [bucket,count] of map.entries()){
+if(count>=threshold){
+if(!best || count>best.count){
+best = { bucket, count };
+}
+}
+}
+return best;
+}
+
+function renderAdminTicker(){
+const t = computeTopRequests(5);
+const el = document.getElementById("adminTicker");
+if(!el) return;
+if(!t){ el.style.display="none"; return; }
+const msg = `${t.count} people requested: “${t.bucket}…” (consider adding it to the menu)`;
+el.style.display="block";
+el.setAttribute("data-text", msg + " • " + msg + " • " + msg);
+}
+
+// ---------- CHARTS ----------
+function destroyChart(id){
+if(charts[id]){ charts[id].destroy(); delete charts[id]; }
+}
+
+function renderProfitChart(){
+const ctx = document.getElementById("profitChart");
+if(!ctx) return;
+
+const series = dailyProfitSeries(10);
+const labels = series.map(x => new Date(x.dayStart).toLocaleDateString());
+const data = series.map(x => Math.round(x.profit*100)/100);
+
+destroyChart("profit");
+charts.profit = new Chart(ctx, {
+type: "line",
+data: { labels, datasets: [{ label:"Profit", data }] },
+options: {
+responsive:true,
+plugins:{ legend:{ display:false } },
+scales:{ y:{ ticks:{ callback:(v)=>"$"+v } } }
+}
+});
+}
+
+function renderProfitTicker(){
+const sales = loadSales();
+const now = Date.now();
+
+const today = profitForRange(sales, startOfDay(now), startOfDay(now)+86400000);
+const weekStart = startOfWeek(now);
+const week = profitForRange(sales, weekStart, weekStart + 7*86400000);
+
+const ticker = document.getElementById("profitTicker");
+const meta = document.getElementById("profitMeta");
+if(!ticker || !meta) return;
+
+ticker.textContent = money(week.profit);
+ticker.style.color = week.profit >= 0 ? "#6dff9a" : "#ff6d6d";
+meta.textContent = `Today: ${money(today.profit)} • Week Revenue: ${money(week.rev)} • Week Cost: ${money(week.cogs)}`;
+
+// daily target to keep ticker up by end of week
+const remain = remainingSellDaysThisWeek(now);
+const needed = week.profit < 0 ? Math.ceil((-week.profit / remain)*100)/100 : 0;
+const targetEl = document.getElementById("dailyTarget");
+if(targetEl){
+targetEl.textContent = needed > 0
+? `Today’s target to get back positive (spread over ${remain} sell days): ${money(needed)} profit/day`
+: `Today’s target: Keep it green ✅ (you’re positive this week)`;
+targetEl.style.borderColor = week.profit >= 0 ? "rgba(56,214,107,0.18)" : "rgba(255,109,109,0.28)";
+targetEl.style.background = week.profit >= 0 ? "rgba(56,214,107,0.10)" : "rgba(255,109,109,0.10)";
+}
+}
+
+// ---------- SaaS-ish charts based on subscriptions + sales ----------
+// NOTE: These are only meaningful if you log subscription signups + expirations in your admin tool.
+function computeMRR(){
+const subs = JSON.parse(localStorage.getItem("signups")||"[]"); // adjust this key to your real signup storage
+const prices = { basic: 5, vip: 10, elite: 20 }; // edit to your real club pricing
+const now = Date.now();
+
+const active = subs.filter(s => !s.expiresAt || s.expiresAt > now);
+const mrr = active.reduce((sum,s)=> sum + (prices[(s.club||"").toLowerCase()]||0), 0);
+return { activeCount: active.length, mrr, prices };
+}
+
+function renderMRRCharts(){
+const { mrr } = computeMRR();
+
+// Waterfall-style (fake waterfall using bar)
+const mrrCtx = document.getElementById("mrrChart");
+if(mrrCtx){
+destroyChart("mrr");
+charts.mrr = new Chart(mrrCtx,{
+type:"bar",
+data:{ labels:["Start MRR","New","Churn","End MRR"], datasets:[{ data:[mrr, 0, 0, mrr] }] },
+options:{ plugins:{ legend:{display:false} } }
+});
+}
+
+// NRR
+const nrrCtx = document.getElementById("nrrChart");
+if(nrrCtx){
+destroyChart("nrr");
+const nrr = 1.0; // until you track expansion/churn events
+charts.nrr = new Chart(nrrCtx,{
+type:"bar",
+data:{ labels:["NRR"], datasets:[{ data:[Math.round(nrr*100)] }] },
+options:{ plugins:{ legend:{display:false} }, scales:{ y:{ suggestedMax:140, ticks:{ callback:v=>v+"%" } } } }
+});
+}
+
+// Growth line (simple: MRR constant until you log over time)
+const gCtx = document.getElementById("growthChart");
+if(gCtx){
+destroyChart("growth");
+charts.growth = new Chart(gCtx,{
+type:"line",
+data:{ labels:["Now"], datasets:[{ data:[mrr], label:"MRR" }] },
+options:{ plugins:{ legend:{display:false} } }
+});
+}
+
+// HOT items (from sales)
+const hotCtx = document.getElementById("hotChart");
+if(hotCtx){
+const sales = loadSales();
+const counts = new Map();
+for(const s of sales){
+counts.set(s.name, (counts.get(s.name)||0) + s.qty);
+}
+const sorted = [...counts.entries()].sort((a,b)=>b[1]-a[1]).slice(0,8);
+destroyChart("hot");
+charts.hot = new Chart(hotCtx,{
+type:"bar",
+data:{ labels: sorted.map(x=>x[0]), datasets:[{ data: sorted.map(x=>x[1]) }] },
+options:{ plugins:{ legend:{display:false} } }
+});
+}
+}
+
+// ---------- ANALYTICS UI ----------
+function toggleAnalytics(){
+const p = document.getElementById("analyticsPanel");
+if(!p) return;
+p.style.display = (p.style.display==="none" || !p.style.display) ? "block" : "none";
+if(p.style.display==="block"){
+showTab("mrr");
+renderMRRCharts();
+}
+}
+function showTab(name){
+["mrr","nrr","growth","hot"].forEach(k=>{
+const el = document.getElementById("tab-"+k);
+if(el) el.style.display = (k===name) ? "block" : "none";
+});
+}
+
+// ---------- MASTER REFRESH ----------
+function refreshAllAdmin(){
+populateSaleDropdown();
+renderCostEditor();
+renderProfitTicker();
+renderProfitChart();
+renderAdminTicker();
+// only render SaaS charts if panel open
+const p = document.getElementById("analyticsPanel");
+if(p && p.style.display==="block") renderMRRCharts();
+}
+
+// Call this after admin login success:
+function onAdminLoginSuccess(){
+refreshAllAdmin();
+}
+  function initAdminDashboard() {
+// put all admin-startup stuff here
+populateSaleDropdown?.(); // fills the item dropdown (if you added it)
+renderProfitChart?.(); // draws charts (if you added them)
+renderProfitTicker?.(); // updates the green/red ticker (if you added it)
+// anything else you want to refresh when admin logs in
+}
 </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
