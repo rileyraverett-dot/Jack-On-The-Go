@@ -1,634 +1,593 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>This Week's Drop</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>This Week's Drop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
-<style>
-:root{
-  --bg:#05060a;
-  --text:#f7f8ff;
-  --muted: rgba(255,255,255,0.7);
+  <style>
+    :root{
+      --bg:#05060a;
+      --text:#f7f8ff;
+      --muted: rgba(255,255,255,0.7);
 
-  /* Color psychology */
-  --blue:#4da3ff;    /* trust */
-  --green:#38d66b;   /* value/money */
-  --gold:#ffcf4a;    /* status */
-  --red:#ff3b3b;     /* urgency */
-  --purple:#b46bff;  /* hype */
-}
+      /* Color psychology */
+      --blue:#4da3ff;     /* trust */
+      --green:#38d66b;    /* value/money */
+      --gold:#ffcf4a;     /* status */
+      --red:#ff3b3b;      /* urgency */
+      --purple:#b46bff;   /* hype */
+    }
 
-*{ box-sizing:border-box; }
-body{
-  margin:0;
-  font-family:Inter, Arial, sans-serif;
-  background: radial-gradient(1200px 800px at 50% -20%, rgba(180,107,255,0.25), transparent 60%),
-              radial-gradient(900px 700px at 20% 10%, rgba(77,163,255,0.18), transparent 60%),
-              radial-gradient(900px 700px at 80% 20%, rgba(56,214,107,0.10), transparent 60%),
-              var(--bg);
-  color:var(--text);
-  text-align:center;
-  min-height:100vh;
-  padding-bottom:72px; /* admin bar space */
-}
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family:Inter, Arial, sans-serif;
+      background: radial-gradient(1200px 800px at 50% -20%, rgba(180,107,255,0.25), transparent 60%),
+                  radial-gradient(900px 700px at 20% 10%, rgba(77,163,255,0.18), transparent 60%),
+                  radial-gradient(900px 700px at 80% 20%, rgba(56,214,107,0.10), transparent 60%),
+                  var(--bg);
+      color:var(--text);
+      text-align:center;
+      min-height:100vh;
+      padding-bottom:72px; /* admin bar space */
+    }
 
-.container{ padding:24px 16px; max-width:820px; margin:0 auto; }
+    .container{ padding:24px 16px; max-width:820px; margin:0 auto; }
 
-.h1{
-  font-weight:800;
-  letter-spacing:0.5px;
-  margin:18px 0 10px;
-  font-size:42px;
-  text-shadow: 0 0 24px rgba(180,107,255,0.25);
-}
-.sub{
-  color:var(--muted);
-  margin-top:6px;
-  font-size:15px;
-}
+    .h1{
+      font-weight:800;
+      letter-spacing:0.5px;
+      margin:18px 0 10px;
+      font-size:42px;
+      text-shadow: 0 0 24px rgba(180,107,255,0.25);
+    }
+    .sub{
+      color:var(--muted);
+      margin-top:6px;
+      font-size:15px;
+    }
 
-.hero-card{
-  margin:18px auto 18px;
-  padding:18px 16px;
-  border-radius:18px;
-  background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
-  border:1px solid rgba(255,255,255,0.14);
-  box-shadow: 0 14px 60px rgba(0,0,0,0.55);
-  position:relative;
-  overflow:hidden;
-}
-.hero-card:before{
-  content:"";
-  position:absolute;
-  inset:-2px;
-  background: radial-gradient(600px 280px at 50% 0%, rgba(255,207,74,0.12), transparent 60%),
-              radial-gradient(700px 320px at 30% 20%, rgba(77,163,255,0.12), transparent 60%),
-              radial-gradient(700px 320px at 70% 30%, rgba(180,107,255,0.12), transparent 60%);
-  pointer-events:none;
-}
-.hero-card > *{ position:relative; z-index:1; }
+    .hero-card{
+      margin:18px auto 18px;
+      padding:18px 16px;
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      border:1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 14px 60px rgba(0,0,0,0.55);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero-card:before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(600px 280px at 50% 0%, rgba(255,207,74,0.12), transparent 60%),
+                  radial-gradient(700px 320px at 30% 20%, rgba(77,163,255,0.12), transparent 60%),
+                  radial-gradient(700px 320px at 70% 30%, rgba(180,107,255,0.12), transparent 60%);
+      pointer-events:none;
+    }
+    .hero-card > *{ position:relative; z-index:1; }
 
-.timer{
-  font-size:30px;
-  font-weight:800;
-  margin:8px 0 4px;
-  display:inline-flex;
-  gap:10px;
-  align-items:center;
-  justify-content:center;
-}
-.timer small{
-  font-size:14px;
-  color:var(--muted);
-  font-weight:600;
-}
+    .timer{
+      font-size:30px;
+      font-weight:800;
+      margin:8px 0 4px;
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      justify-content:center;
+    }
+    .timer small{
+      font-size:14px;
+      color:var(--muted);
+      font-weight:600;
+    }
 
-.badge-row{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  flex-wrap:wrap;
-  margin:14px 0 18px;
-}
-.badge{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding:10px 12px;
-  border-radius:999px;
-  background:rgba(255,255,255,0.08);
-  border:1px solid rgba(255,255,255,0.12);
-  backdrop-filter: blur(10px);
-  font-weight:600;
-  font-size:13px;
-}
-.badge.cancel{
-  background: rgba(56,214,107,0.10);
-  border: 1px solid rgba(56,214,107,0.30);
-  box-shadow: 0 0 24px rgba(56,214,107,0.15);
-}
-.badge.hot{
-  background: rgba(255,59,59,0.10);
-  border: 1px solid rgba(255,59,59,0.30);
-}
-.pulse{
-  animation: pulse 1.3s infinite;
-}
-@keyframes pulse{
-  0%{ box-shadow: 0 0 0 0 rgba(255,59,59,0.35); }
-  70%{ box-shadow: 0 0 0 14px rgba(255,59,59,0.0); }
-  100%{ box-shadow: 0 0 0 0 rgba(255,59,59,0.0); }
-}
+    .badge-row{
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      flex-wrap:wrap;
+      margin:14px 0 18px;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.08);
+      border:1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px);
+      font-weight:600;
+      font-size:13px;
+    }
+    .badge.cancel{
+      background: rgba(56,214,107,0.10);
+      border: 1px solid rgba(56,214,107,0.30);
+      box-shadow: 0 0 24px rgba(56,214,107,0.15);
+    }
+    .badge.hot{
+      background: rgba(255,59,59,0.10);
+      border: 1px solid rgba(255,59,59,0.30);
+    }
+    .pulse{ animation: pulse 1.3s infinite; }
+    @keyframes pulse{
+      0%{ box-shadow: 0 0 0 0 rgba(255,59,59,0.35); }
+      70%{ box-shadow: 0 0 0 14px rgba(255,59,59,0.0); }
+      100%{ box-shadow: 0 0 0 0 rgba(255,59,59,0.0); }
+    }
 
-.primary-btn{
-  border:none;
-  border-radius:14px;
-  padding:16px 18px;
-  font-size:18px;
-  font-weight:800;
-  cursor:pointer;
-  width:min(340px, 92%);
-  margin-top:14px;
-  background: linear-gradient(90deg, var(--purple), var(--blue));
-  color:white;
-  box-shadow: 0 12px 40px rgba(180,107,255,0.25);
-  transition: transform .12s ease, filter .12s ease;
-}
-.primary-btn:active{ transform: scale(0.98); filter:brightness(0.95); }
+    .primary-btn{
+      border:none;
+      border-radius:14px;
+      padding:16px 18px;
+      font-size:18px;
+      font-weight:800;
+      cursor:pointer;
+      width:min(340px, 92%);
+      margin-top:14px;
+      background: linear-gradient(90deg, var(--purple), var(--blue));
+      color:white;
+      box-shadow: 0 12px 40px rgba(180,107,255,0.25);
+      transition: transform .12s ease, filter .12s ease;
+    }
+    .primary-btn:active{ transform: scale(0.98); filter:brightness(0.95); }
 
-.section-title{
-  margin:22px 0 10px;
-  font-weight:800;
-  font-size:18px;
-  letter-spacing:0.2px;
-}
+    .section-title{
+      margin:22px 0 10px;
+      font-weight:800;
+      font-size:18px;
+      letter-spacing:0.2px;
+    }
 
-.tiers{
-  display:grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap:12px;
-  margin:12px auto 10px;
-}
-@media (max-width: 720px){
-  .tiers{ grid-template-columns: 1fr; }
-}
+    .tiers{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+      margin:12px auto 10px;
+    }
+    @media (max-width: 720px){
+      .tiers{ grid-template-columns: 1fr; }
+    }
 
-.tier{
-  text-align:left;
-  padding:16px;
-  border-radius:16px;
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.12);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
-  position:relative;
-  overflow:hidden;
-}
-.tier:before{
-  content:"";
-  position:absolute;
-  inset:-2px;
-  opacity:0.9;
-  pointer-events:none;
-}
-.tier.basic:before{ background: radial-gradient(550px 250px at 30% 20%, rgba(77,163,255,0.22), transparent 60%); }
-.tier.vip:before{ background: radial-gradient(550px 250px at 30% 20%, rgba(56,214,107,0.22), transparent 60%); }
-.tier.elite:before{ background: radial-gradient(550px 250px at 30% 20%, rgba(255,207,74,0.20), transparent 60%); }
-.tier > *{ position:relative; z-index:1; }
+    .tier{
+      text-align:left;
+      padding:16px;
+      border-radius:16px;
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+      position:relative;
+      overflow:hidden;
+    }
+    .tier:before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      opacity:0.9;
+      pointer-events:none;
+    }
+    .tier.basic:before{ background: radial-gradient(550px 250px at 30% 20%, rgba(77,163,255,0.22), transparent 60%); }
+    .tier.vip:before{ background: radial-gradient(550px 250px at 30% 20%, rgba(56,214,107,0.22), transparent 60%); }
+    .tier.elite:before{ background: radial-gradient(550px 250px at 30% 20%, rgba(255,207,74,0.20), transparent 60%); }
+    .tier > *{ position:relative; z-index:1; }
 
-.tier h3{ margin:2px 0 6px; font-size:20px; }
-.tier p{ margin:0 0 10px; color:var(--muted); font-size:13px; line-height:1.35; }
+    .tier h3{ margin:2px 0 6px; font-size:20px; }
+    .tier p{ margin:0 0 10px; color:var(--muted); font-size:13px; line-height:1.35; }
 
-.pill{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  font-size:12px;
-  font-weight:800;
-  padding:8px 10px;
-  border-radius:999px;
-  margin-bottom:10px;
-  border:1px solid rgba(255,255,255,0.16);
-  background: rgba(0,0,0,0.25);
-}
-.pill.basic{ color: var(--blue); border-color: rgba(77,163,255,0.35); }
-.pill.vip{ color: var(--green); border-color: rgba(56,214,107,0.35); }
-.pill.elite{ color: var(--gold); border-color: rgba(255,207,74,0.35); }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-size:12px;
+      font-weight:800;
+      padding:8px 10px;
+      border-radius:999px;
+      margin-bottom:10px;
+      border:1px solid rgba(255,255,255,0.16);
+      background: rgba(0,0,0,0.25);
+    }
+    .pill.basic{ color: var(--blue); border-color: rgba(77,163,255,0.35); }
+    .pill.vip{ color: var(--green); border-color: rgba(56,214,107,0.35); }
+    .pill.elite{ color: var(--gold); border-color: rgba(255,207,74,0.35); }
 
-.buy-btn{
-  width:100%;
-  border:none;
-  border-radius:14px;
-  padding:14px 14px;
-  font-size:16px;
-  font-weight:900;
-  cursor:pointer;
-  color:#0b0b0b;
-  margin-top:6px;
-  transition: transform .12s ease, filter .12s ease;
-}
-.buy-btn:active{ transform: scale(0.98); filter:brightness(0.95); }
-.buy-basic{ background: linear-gradient(90deg, rgba(77,163,255,0.95), rgba(77,163,255,0.75)); }
-.buy-vip{ background: linear-gradient(90deg, rgba(56,214,107,0.95), rgba(56,214,107,0.75)); }
-.buy-elite{ background: linear-gradient(90deg, rgba(255,207,74,0.98), rgba(255,207,74,0.75)); }
+    .buy-btn{
+      width:100%;
+      border:none;
+      border-radius:14px;
+      padding:14px 14px;
+      font-size:16px;
+      font-weight:900;
+      cursor:pointer;
+      color:#0b0b0b;
+      margin-top:6px;
+      transition: transform .12s ease, filter .12s ease;
+    }
+    .buy-btn:active{ transform: scale(0.98); filter:brightness(0.95); }
+    .buy-basic{ background: linear-gradient(90deg, rgba(77,163,255,0.95), rgba(77,163,255,0.75)); }
+    .buy-vip{ background: linear-gradient(90deg, rgba(56,214,107,0.95), rgba(56,214,107,0.75)); }
+    .buy-elite{ background: linear-gradient(90deg, rgba(255,207,74,0.98), rgba(255,207,74,0.75)); }
 
-.small-note{ margin-top:10px; color:var(--muted); font-size:12px; }
+    .small-note{ margin-top:10px; color:var(--muted); font-size:12px; }
 
-/* ===== MODALS (solid + readable) ===== */
-.modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background: rgba(0,0,0,0.97);
-  backdrop-filter: blur(14px);
-  overflow:auto;
-  padding:18px 12px 90px;
-  z-index:9999;
-}
-.modal-card{
-  max-width:560px;
-  margin:20px auto;
-  background:#0f1117; /* SOLID */
-  border: 1px solid rgba(255,255,255,0.10);
-  border-radius:18px;
-  padding:20px;
-  box-shadow: 0 40px 120px rgba(0,0,0,0.9);
-  text-align:left;
-  position:relative;
-  overflow:hidden;
-}
+    /* ===== MODALS (solid + readable) ===== */
+    .modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,0.97);
+      backdrop-filter: blur(14px);
+      overflow:auto;
+      padding:18px 12px 90px;
+      z-index:9999;
+    }
+    .modal-card{
+      max-width:560px;
+      margin:20px auto;
+      background:#0f1117; /* SOLID */
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius:18px;
+      padding:20px;
+      box-shadow: 0 40px 120px rgba(0,0,0,0.9);
+      text-align:left;
+      position:relative;
+      overflow:hidden;
+    }
+    .modal-card::before{
+      content:"";
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      height:3px;
+      background: linear-gradient(90deg, #38d66b, #4da3ff, #b46bff);
+      border-radius: 18px 18px 0 0;
+    }
+    .modal-card h2{ margin:6px 0 12px; text-align:center; position:relative; z-index:1; }
 
-/* Top glow line (signup + admin) */
-.modal-card::before{
-  content:"";
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  height:3px;
-  background: linear-gradient(90deg, #38d66b, #4da3ff, #b46bff);
-  border-radius: 18px 18px 0 0;
-}
+    .field{
+      width:100%;
+      padding:12px 12px;
+      margin:8px 0;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.16);
+      background:#151822;
+      color:var(--text);
+      outline:none;
+      position:relative;
+      z-index:1;
+    }
+    .field::placeholder{ color: rgba(255,255,255,0.55); }
 
-.modal-card h2{ margin:6px 0 12px; text-align:center; position:relative; z-index:1; }
+    .row{ display:flex; gap:10px; position:relative; z-index:1; }
+    @media(max-width:560px){ .row{ flex-direction:column; } }
 
-.field{
-  width:100%;
-  padding:12px 12px;
-  margin:8px 0;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,0.16);
-  background:#151822; /* readable */
-  color:var(--text);
-  outline:none;
-  position:relative;
-  z-index:1;
-}
-.field::placeholder{ color: rgba(255,255,255,0.55); }
+    .modal-actions{
+      display:flex;
+      gap:10px;
+      margin-top:12px;
+      position:relative;
+      z-index:1;
+    }
+    .action{
+      flex:1;
+      border:none;
+      border-radius:14px;
+      padding:14px 14px;
+      font-size:15px;
+      font-weight:900;
+      cursor:pointer;
+    }
+    .action.submit{
+      background: linear-gradient(90deg, var(--green), rgba(56,214,107,0.7));
+      color:#07160c;
+    }
+    .action.cancel{
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.20);
+      color: var(--text);
+    }
 
-.row{ display:flex; gap:10px; position:relative; z-index:1; }
-@media(max-width:560px){ .row{ flex-direction:column; } }
+    hr.sep{ border:none; border-top:1px solid rgba(255,255,255,0.10); margin:12px 0; }
 
-.modal-actions{
-  display:flex;
-  gap:10px;
-  margin-top:12px;
-  position:relative;
-  z-index:1;
-}
-.action{
-  flex:1;
-  border:none;
-  border-radius:14px;
-  padding:14px 14px;
-  font-size:15px;
-  font-weight:900;
-  cursor:pointer;
-}
-.action.submit{
-  background: linear-gradient(90deg, var(--green), rgba(56,214,107,0.7));
-  color:#07160c;
-}
-.action.cancel{
-  background: rgba(255,255,255,0.10);
-  border: 1px solid rgba(255,255,255,0.20);
-  color: var(--text);
-}
+    /* ADMIN BAR */
+    .admin-bar{
+      position:fixed;
+      bottom:0;
+      left:0;
+      right:0;
+      background: rgba(10,10,16,0.85);
+      backdrop-filter: blur(10px);
+      border-top:1px solid rgba(255,255,255,0.12);
+      padding:10px 10px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:center;
+      z-index:99999;
+    }
+    .admin-bar input{
+      width:min(520px, 65%);
+      padding:12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+    }
+    .admin-bar button{
+      padding:12px 14px;
+      border-radius:12px;
+      border:none;
+      font-weight:900;
+      cursor:pointer;
+      background: linear-gradient(90deg, var(--purple), var(--blue));
+      color:white;
+    }
 
-hr.sep{ border:none; border-top:1px solid rgba(255,255,255,0.10); margin:12px 0; }
+    /* Admin cards */
+    .table-card{
+      margin:10px 0;
+      padding:14px;
+      border-radius:14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      position:relative;
+      z-index:1;
+    }
+    .table-card strong{ font-size:14px; }
+    .kv{ color: var(--muted); font-size:12px; line-height:1.45; margin-top:6px; }
+    .kv b{ color: var(--text); }
 
-/* ADMIN BAR */
-.admin-bar{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  background: rgba(10,10,16,0.85);
-  backdrop-filter: blur(10px);
-  border-top:1px solid rgba(255,255,255,0.12);
-  padding:10px 10px;
-  display:flex;
-  gap:10px;
-  align-items:center;
-  justify-content:center;
-  z-index:99999;
-}
-.admin-bar input{
-  width:min(520px, 65%);
-  padding:12px;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,0.14);
-  background: rgba(255,255,255,0.08);
-  color: var(--text);
-}
-.admin-bar button{
-  padding:12px 14px;
-  border-radius:12px;
-  border:none;
-  font-weight:900;
-  cursor:pointer;
-  background: linear-gradient(90deg, var(--purple), var(--blue));
-  color:white;
-}
+    .admin-actions{
+      display:flex;
+      gap:10px;
+      margin-top:10px;
+      flex-wrap:wrap;
+    }
+    .admin-actions button{
+      flex:1;
+      min-width: 160px;
+      border:none;
+      border-radius:12px;
+      padding:10px;
+      font-weight:900;
+      cursor:pointer;
+    }
+    .btn-used{ background: rgba(56,214,107,0.18); border:1px solid rgba(56,214,107,0.35); color: var(--text); }
+    .btn-warn{ background: rgba(255,207,74,0.14); border:1px solid rgba(255,207,74,0.35); color: var(--text); }
+    .btn-reset{ background: rgba(255,59,59,0.14); border:1px solid rgba(255,59,59,0.35); color: var(--text); }
+    .btn-blue{ background: rgba(77,163,255,0.16); border:1px solid rgba(77,163,255,0.35); color: var(--text); }
 
-/* Admin cards */
-.table-card{
-  margin:10px 0;
-  padding:14px;
-  border-radius:14px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.12);
-  position:relative;
-  z-index:1;
-}
-.table-card strong{ font-size:14px; }
-.kv{ color: var(--muted); font-size:12px; line-height:1.45; margin-top:6px; }
-.kv b{ color: var(--text); }
+    .checkboxRow{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      margin-top:6px;
+      text-align:left;
+      color: rgba(255,255,255,0.8);
+      font-size:12px;
+      line-height:1.35;
+      position:relative;
+      z-index:1;
+    }
+    .checkboxRow input{ margin-top:2px; }
 
-.admin-actions{
-  display:flex;
-  gap:10px;
-  margin-top:10px;
-  flex-wrap:wrap;
-}
-.admin-actions button{
-  flex:1;
-  min-width: 160px;
-  border:none;
-  border-radius:12px;
-  padding:10px;
-  font-weight:900;
-  cursor:pointer;
-}
-.btn-used{ background: rgba(56,214,107,0.18); border:1px solid rgba(56,214,107,0.35); color: var(--text); }
-.btn-warn{ background: rgba(255,207,74,0.14); border:1px solid rgba(255,207,74,0.35); color: var(--text); }
-.btn-reset{ background: rgba(255,59,59,0.14); border:1px solid rgba(255,59,59,0.35); color: var(--text); }
-.btn-blue{ background: rgba(77,163,255,0.16); border:1px solid rgba(77,163,255,0.35); color: var(--text); }
+    /* ===== MENU ===== */
+    .menu-btn{
+      margin: 10px auto 12px;
+      border:none;
+      border-radius:14px;
+      padding:14px 16px;
+      font-size:16px;
+      font-weight:900;
+      cursor:pointer;
+      width:min(360px, 92%);
+      color: var(--text);
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.16);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 14px 50px rgba(0,0,0,0.45);
+      transition: transform .12s ease, filter .12s ease;
+    }
+    .menu-btn:active{ transform: scale(0.98); filter: brightness(0.95); }
 
-.checkboxRow{
-  display:flex;
-  gap:10px;
-  align-items:flex-start;
-  margin-top:6px;
-  text-align:left;
-  color: rgba(255,255,255,0.8);
-  font-size:12px;
-  line-height:1.35;
-  position:relative;
-  z-index:1;
-}
-.checkboxRow input{ margin-top:2px; }
-  /* ===== MENU BUTTON ===== */
-.menu-btn{
-margin: 10px auto 12px;
-border:none;
-border-radius:14px;
-padding:14px 16px;
-font-size:16px;
-font-weight:900;
-cursor:pointer;
-width:min(360px, 92%);
-color: var(--text);
-background: rgba(255,255,255,0.08);
-border: 1px solid rgba(255,255,255,0.16);
-backdrop-filter: blur(10px);
-box-shadow: 0 14px 50px rgba(0,0,0,0.45);
-transition: transform .12s ease, filter .12s ease;
-}
-.menu-btn:active{ transform: scale(0.98); filter: brightness(0.95); }
+    .menu-panel{
+      display:none;
+      width:min(540px, 92%);
+      margin: 0 auto 14px;
+      border-radius:18px;
+      position:relative;
+      overflow:hidden;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.14);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 18px 70px rgba(0,0,0,0.55);
+    }
+    .menu-inner{
+      position:relative;
+      z-index:2;
+      padding:18px;
+      text-align:left;
+    }
+    .menu-title{
+      font-size:18px;
+      font-weight:900;
+      letter-spacing:0.2px;
+    }
+    .menu-sub{
+      color: rgba(255,255,255,0.7);
+      font-size:12px;
+      margin-top:4px;
+    }
 
-/* ===== MENU PANEL (glass square) ===== */
-.menu-panel{
-display:none;
-width:min(540px, 92%);
-margin: 0 auto 14px;
-border-radius:18px;
-position:relative;
-overflow:hidden;
-background: rgba(255,255,255,0.07);
-border: 1px solid rgba(255,255,255,0.14);
-backdrop-filter: blur(14px);
-box-shadow: 0 18px 70px rgba(0,0,0,0.55);
-}
+    /* STAR BACKGROUND */
+    .menu-stars{
+      position:absolute;
+      inset:0;
+      z-index:1;
+      pointer-events:none;
+      opacity:0.55;
+    }
+    .menu-stars::before,
+    .menu-stars::after{
+      content:"";
+      position:absolute;
+      inset:-80px 0 0 0;
+      background-repeat: repeat;
+      animation-timing-function: linear;
+    }
+    .menu-stars::before{
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,0.9) 1px, transparent 1.6px),
+        radial-gradient(circle, rgba(255,255,255,0.6) 1px, transparent 1.8px);
+      background-size: 110px 140px, 170px 210px;
+      background-position: 0 0, 40px 60px;
+      animation: starsFall 16s linear infinite, starsTwinkle 2.8s ease-in-out infinite;
+      filter: blur(0.1px);
+    }
+    .menu-stars::after{
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,0.75) 1.2px, transparent 2.2px),
+        radial-gradient(circle, rgba(255,207,74,0.25) 1.4px, transparent 2.6px);
+      background-size: 220px 260px, 300px 340px;
+      background-position: 20px 20px, 100px 120px;
+      animation: starsFall 28s linear infinite, starsTwinkle2 4.2s ease-in-out infinite;
+      opacity:0.6;
+      filter: blur(0.25px);
+    }
+    @keyframes starsFall{ from { transform: translateY(-60px); } to { transform: translateY(260px); } }
+    @keyframes starsTwinkle{ 0%,100% { opacity: 0.55; } 50% { opacity: 0.92; } }
+    @keyframes starsTwinkle2{ 0%,100% { opacity: 0.35; } 50% { opacity: 0.70; } }
 
-/* Inner content layer */
-.menu-inner{
-position:relative;
-z-index:2;
-padding:18px;
-text-align:left;
-}
-.menu-title{
-font-size:18px;
-font-weight:900;
-letter-spacing:0.2px;
-}
-.menu-sub{
-color: rgba(255,255,255,0.7);
-font-size:12px;
-margin-top:4px;
-}
+    .menu-deal{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:14px;
+      background: rgba(56,214,107,0.12);
+      border:1px solid rgba(56,214,107,0.28);
+      font-weight:800;
+      font-size:13px;
+    }
+    .menu-section{
+      margin-top:14px;
+      padding:12px;
+      border-radius:16px;
+      background: rgba(0,0,0,0.28);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+    .menu-h{
+      font-weight:900;
+      letter-spacing:0.2px;
+      margin-bottom:8px;
+      font-size:14px;
+    }
+    .menu-item{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:8px 0;
+      border-top:1px solid rgba(255,255,255,0.08);
+      font-size:13px;
+      color: rgba(255,255,255,0.86);
+    }
+    .menu-item:first-of-type{ border-top:none; }
+    .menu-item b{ color: white; font-weight:900; }
 
-/* Menu links */
-.menu-links{
-display:grid;
-grid-template-columns: 1fr 1fr;
-gap:10px;
-margin-top:14px;
-}
-@media(max-width:520px){
-.menu-links{ grid-template-columns: 1fr; }
-}
-.menu-link{
-border:none;
-border-radius:14px;
-padding:12px 12px;
-font-weight:900;
-cursor:pointer;
-color: var(--text);
-background: rgba(0,0,0,0.35);
-border: 1px solid rgba(255,255,255,0.12);
-transition: transform .12s ease, filter .12s ease;
-}
-.menu-link:active{ transform: scale(0.98); filter: brightness(0.95); }
+    .menu-close{
+      margin-top:14px;
+      width:100%;
+      border:none;
+      border-radius:14px;
+      padding:12px 12px;
+      font-weight:900;
+      cursor:pointer;
+      color: var(--text);
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.18);
+    }
 
-/* ===== STAR BACKGROUND (falling + twinkling) ===== */
-.menu-stars{
-position:absolute;
-inset:0;
-z-index:1;
-pointer-events:none;
-opacity:0.55; /* semi-seeable */
-}
+    .request-btn{
+      margin-top:14px;
+      width:100%;
+      border:none;
+      border-radius:14px;
+      padding:12px 12px;
+      font-weight:900;
+      cursor:pointer;
+      color: var(--text);
+      background: rgba(255, 214, 0, 0.14);
+      border: 1px solid rgba(255, 214, 0, 0.30);
+    }
 
-/* Two star layers using repeating radial gradients */
-.menu-stars::before,
-.menu-stars::after{
-content:"";
-position:absolute;
-inset:-80px 0 0 0; /* extra top space so falling looks continuous */
-background-repeat: repeat;
-animation-timing-function: linear;
-}
+    /* IMPORTANT: Request popup uses DIFFERENT classes than .modal to avoid breaking signup/admin */
+    .req-overlay{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.55);
+      align-items:center;
+      justify-content:center;
+      z-index:100000;
+      padding:16px;
+    }
+    .req-card{
+      width:min(520px, 92%);
+      border-radius:18px;
+      padding:16px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.14);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 18px 70px rgba(0,0,0,0.55);
+      color:#fff;
+      text-align:left;
+    }
 
-/* Small stars layer */
-.menu-stars::before{
-background-image:
-radial-gradient(circle, rgba(255,255,255,0.9) 1px, transparent 1.6px),
-radial-gradient(circle, rgba(255,255,255,0.6) 1px, transparent 1.8px);
-background-size: 110px 140px, 170px 210px;
-background-position: 0 0, 40px 60px;
-animation: starsFall 16s linear infinite, starsTwinkle 2.8s ease-in-out infinite;
-filter: blur(0.1px);
-}
+    /* Admin analytics/profit styles */
+    .admin-card{ margin-top:14px; padding:14px; border-radius:16px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); backdrop-filter: blur(14px); }
+    .admin-card-title{ font-weight:900; margin-bottom:10px; }
+    .admin-row{ display:flex; gap:10px; margin-top:10px; }
+    .admin-input{ flex:1; padding:12px; border-radius:12px; border:1px solid rgba(255,255,255,.14); background:rgba(0,0,0,.35); color:#fff; }
+    .admin-btn{ padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.10); color:#fff; font-weight:900; cursor:pointer; }
+    .admin-btn.wide{ width:100%; }
 
-/* Bigger stars layer (slower, softer) */
-.menu-stars::after{
-background-image:
-radial-gradient(circle, rgba(255,255,255,0.75) 1.2px, transparent 2.2px),
-radial-gradient(circle, rgba(255,207,74,0.25) 1.4px, transparent 2.6px);
-background-size: 220px 260px, 300px 340px;
-background-position: 20px 20px, 100px 120px;
-animation: starsFall 28s linear infinite, starsTwinkle2 4.2s ease-in-out infinite;
-opacity:0.6;
-filter: blur(0.25px);
-}
+    .admin-ticker{
+      margin-top:12px;
+      padding:10px 12px;
+      border-radius:14px;
+      background: rgba(255, 214, 0, 0.12);
+      border: 1px solid rgba(255, 214, 0, 0.28);
+      font-weight:900;
+      white-space:nowrap;
+      overflow:hidden;
+    }
+    .admin-ticker::after{
+      content: attr(data-text);
+      display:inline-block;
+      padding-left: 40px;
+      animation: tickerScroll 12s linear infinite;
+    }
+    @keyframes tickerScroll{ from{ transform: translateX(0); } to{ transform: translateX(-60%); } }
 
-@keyframes starsFall{
-from { transform: translateY(-60px); }
-to { transform: translateY(260px); } /* slow falling */
-}
+    .profit-top{ display:flex; align-items:flex-end; justify-content:space-between; gap:12px; margin-bottom:10px; }
+    .profit-ticker{ font-size:28px; font-weight:1000; }
+    .profit-meta{ opacity:.75; font-size:12px; }
 
-@keyframes starsTwinkle{
-0%,100% { opacity: 0.55; }
-50% { opacity: 0.92; }
-}
+    .daily-target{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:14px;
+      background: rgba(56,214,107,0.10);
+      border: 1px solid rgba(56,214,107,0.18);
+      font-weight:900;
+    }
 
-@keyframes starsTwinkle2{
-0%,100% { opacity: 0.35; }
-50% { opacity: 0.70; }
-}
-  .menu-deal{
-margin-top:10px;
-padding:10px 12px;
-border-radius:14px;
-background: rgba(56,214,107,0.12);
-border:1px solid rgba(56,214,107,0.28);
-font-weight:800;
-font-size:13px;
-}
-
-.menu-section{
-margin-top:14px;
-padding:12px;
-border-radius:16px;
-background: rgba(0,0,0,0.28);
-border: 1px solid rgba(255,255,255,0.10);
-}
-
-.menu-h{
-font-weight:900;
-letter-spacing:0.2px;
-margin-bottom:8px;
-font-size:14px;
-}
-
-.menu-item{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:8px 0;
-border-top:1px solid rgba(255,255,255,0.08);
-font-size:13px;
-color: rgba(255,255,255,0.86);
-}
-.menu-item:first-of-type{ border-top:none; }
-.menu-item b{
-color: white;
-font-weight:900;
-}
-
-.menu-close{
-margin-top:14px;
-width:100%;
-border:none;
-border-radius:14px;
-padding:12px 12px;
-font-weight:900;
-cursor:pointer;
-color: var(--text);
-background: rgba(255,255,255,0.10);
-border: 1px solid rgba(255,255,255,0.18);
-}
-  .request-btn{
-margin-top:14px;
-width:100%;
-border:none;
-border-radius:14px;
-padding:12px 12px;
-font-weight:900;
-cursor:pointer;
-color: var(--text);
-background: rgba(255, 214, 0, 0.14);
-border: 1px solid rgba(255, 214, 0, 0.30);
-}
-.modal{ position:fixed; inset:0; background:rgba(0,0,0,.55); display:flex; align-items:center; justify-content:center; z-index:9999; }
-.modal-content{
-width:min(520px, 92%);
-border-radius:18px;
-padding:16px;
-background: rgba(255,255,255,0.07);
-border: 1px solid rgba(255,255,255,0.14);
-backdrop-filter: blur(16px);
-box-shadow: 0 18px 70px rgba(0,0,0,0.55);
-color:#fff;
-}
-  .admin-card{ margin-top:14px; padding:14px; border-radius:16px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); backdrop-filter: blur(14px); }
-.admin-card-title{ font-weight:900; margin-bottom:10px; }
-.admin-row{ display:flex; gap:10px; margin-top:10px; }
-.admin-input{ flex:1; padding:12px; border-radius:12px; border:1px solid rgba(255,255,255,.14); background:rgba(0,0,0,.35); color:#fff; }
-.admin-btn{ padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.10); color:#fff; font-weight:900; cursor:pointer; }
-.admin-btn.wide{ width:100%; }
-
-.admin-ticker{
-margin-top:12px;
-padding:10px 12px;
-border-radius:14px;
-background: rgba(255, 214, 0, 0.12);
-border: 1px solid rgba(255, 214, 0, 0.28);
-font-weight:900;
-white-space:nowrap;
-overflow:hidden;
-}
-.admin-ticker::after{
-content: attr(data-text);
-display:inline-block;
-padding-left: 40px;
-animation: tickerScroll 12s linear infinite;
-}
-@keyframes tickerScroll{
-from{ transform: translateX(0); }
-to{ transform: translateX(-60%); }
-}
-
-.profit-top{ display:flex; align-items:flex-end; justify-content:space-between; gap:12px; margin-bottom:10px; }
-.profit-ticker{ font-size:28px; font-weight:1000; }
-.profit-meta{ opacity:.75; font-size:12px; }
-
-.daily-target{
-margin-top:10px;
-padding:10px 12px;
-border-radius:14px;
-background: rgba(56,214,107,0.10);
-border: 1px solid rgba(56,214,107,0.18);
-font-weight:900;
-}
-
-.tabs{ display:flex; gap:8px; flex-wrap:wrap; }
-.tab{ padding:10px 12px; border-radius:12px; border:1px solid rgba(255,255,255,.14); background:rgba(0,0,0,.28); color:#fff; font-weight:900; cursor:pointer; }
-.tabpanel{ display:none; margin-top:12px; }
-</style>
+    .tabs{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+    .tab{ padding:10px 12px; border-radius:12px; border:1px solid rgba(255,255,255,.14); background:rgba(0,0,0,.28); color:#fff; font-weight:900; cursor:pointer; }
+    .tabpanel{ display:none; margin-top:12px; }
+  </style>
 </head>
 
 <body>
@@ -657,67 +616,55 @@ font-weight:900;
 
     <div id="clubs"></div>
 
-<!-- MENU BUTTON (right before clubs) -->
-<button class="menu-btn" onclick="toggleMenu()">🍬 Menu</button>
+    <!-- MENU BUTTON -->
+    <button class="menu-btn" onclick="toggleMenu()">🍬 Menu</button>
 
-<!-- MENU PANEL -->
-<div id="menuPanel" class="menu-panel">
-<div class="menu-stars"></div>
+    <!-- MENU PANEL -->
+    <div id="menuPanel" class="menu-panel">
+      <div class="menu-stars"></div>
 
-<div class="menu-inner">
-<div class="menu-title">SNACK MENU</div>
-<div class="menu-sub">Drinks • Snacks • Gum</div>
+      <div class="menu-inner">
+        <div class="menu-title">SNACK MENU</div>
+        <div class="menu-sub">Drinks • Snacks • Gum</div>
 
-<div class="menu-deal">🥤 Drinks Deal: <b>Buy 2 get 1 free</b></div>
+        <div class="menu-deal">🥤 Drinks Deal: <b>Buy 2 get 1 free</b></div>
 
-<div class="menu-section">
-<div class="menu-h">⚡ Energy</div>
-<div class="menu-item"><span>Redbull (original)</span><b>$4.50</b></div>
-<div class="menu-item"><span>Redbull (red)</span><b>$4.95</b></div>
-<div class="menu-item"><span>Monster (white)</span><b>$6</b></div>
-</div>
+        <div class="menu-section">
+          <div class="menu-h">⚡ Energy</div>
+          <div class="menu-item"><span>Redbull (original)</span><b>$4.50</b></div>
+          <div class="menu-item"><span>Redbull (red)</span><b>$4.95</b></div>
+          <div class="menu-item"><span>Monster (white)</span><b>$6</b></div>
+        </div>
 
-<div class="menu-section">
-<div class="menu-h">🥤 Soda</div>
-<div class="menu-item"><span>Coke (original)</span><b>$3</b></div>
-<div class="menu-item"><span>Fanta (original)</span><b>$3.75</b></div>
-<div class="menu-item"><span>Mtn Dew (original)</span><b>$5</b></div>
-</div>
+        <div class="menu-section">
+          <div class="menu-h">🥤 Soda</div>
+          <div class="menu-item"><span>Coke (original)</span><b>$3</b></div>
+          <div class="menu-item"><span>Fanta (original)</span><b>$3.75</b></div>
+          <div class="menu-item"><span>Mtn Dew (original)</span><b>$5</b></div>
+        </div>
 
-<div class="menu-section">
-<div class="menu-h">🔥 Snacks</div>
-<div class="menu-item"><span>Doritos (nacho)</span><b>$3.75</b></div>
-<div class="menu-item"><span>Doritos (blue)</span><b>$4.25</b></div>
-<div class="menu-item"><span>Funyun</span><b>$4.90</b></div>
-<div class="menu-item"><span>Hot Cheetos</span><b>$5</b></div>
-</div>
+        <div class="menu-section">
+          <div class="menu-h">🔥 Snacks</div>
+          <div class="menu-item"><span>Doritos (nacho)</span><b>$3.75</b></div>
+          <div class="menu-item"><span>Doritos (blue)</span><b>$4.25</b></div>
+          <div class="menu-item"><span>Funyun</span><b>$4.90</b></div>
+          <div class="menu-item"><span>Hot Cheetos</span><b>$5</b></div>
+        </div>
 
-<div class="menu-section">
-<div class="menu-h">🧊 Gum</div>
-<div class="menu-item"><span>Spearmint</span><b>$3</b></div>
-<div class="menu-item"><span>Hubba Bubba</span><b>$3.75</b></div>
-<div class="menu-item"><span>Ice Breakers Cube</span><b>$6</b></div>
-</div>
+        <div class="menu-section">
+          <div class="menu-h">🧊 Gum</div>
+          <div class="menu-item"><span>Spearmint</span><b>$3</b></div>
+          <div class="menu-item"><span>Hubba Bubba</span><b>$3.75</b></div>
+          <div class="menu-item"><span>Ice Breakers Cube</span><b>$6</b></div>
+        </div>
 
-  <button class="request-btn" onclick="openRequest()">➕ Request an item</button>
+        <button class="request-btn" onclick="openRequest()">➕ Request an item</button>
 
-<div id="requestModal" class="modal" style="display:none;">
-<div class="modal-content">
-<h3 style="margin:0 0 10px;">Request an item</h3>
-<p style="opacity:.75; margin:0 0 10px;">Type what you want added. If 5+ people request the same thing, admin will see it.</p>
-<input id="requestInput" type="text" placeholder="ex: Takis, Dr Pepper, Gatorade..." style="width:100%; padding:12px; border-radius:12px; border:1px solid rgba(255,255,255,.15); background:rgba(0,0,0,.35); color:#fff;"/>
-<div style="display:flex; gap:10px; margin-top:12px;">
-<button class="menu-link" style="flex:1;" onclick="submitRequest()">Submit</button>
-<button class="menu-link" style="flex:1;" onclick="closeRequest()">Cancel</button>
-</div>
-</div>
-</div>
-  
-<button class="menu-close" onclick="toggleMenu(false)">Close</button>
-</div>
-</div>
+        <button class="menu-close" onclick="toggleMenu(false)">Close</button>
+      </div>
+    </div>
 
-<div class="section-title">Choose your club</div>
+    <div class="section-title">Choose your club</div>
 
     <div class="tiers">
       <div class="tier basic">
@@ -744,6 +691,20 @@ font-weight:900;
 
     <div class="small-note">
       This page stores signups on THIS device (localStorage). For cross-phone sync, you’ll want Google Sheets/Supabase later.
+    </div>
+  </div>
+
+  <!-- REQUEST POPUP (separate overlay so it doesn't break your .modal system) -->
+  <div id="requestOverlay" class="req-overlay">
+    <div class="req-card">
+      <h3 style="margin:0 0 10px;">Request an item</h3>
+      <p style="opacity:.75; margin:0 0 10px;">Type what you want added. If 5+ people request the same thing, admin will see it.</p>
+      <input id="requestInput" type="text" placeholder="ex: Takis, Dr Pepper, Gatorade..."
+        style="width:100%; padding:12px; border-radius:12px; border:1px solid rgba(255,255,255,.15); background:rgba(0,0,0,.35); color:#fff;"/>
+      <div style="display:flex; gap:10px; margin-top:12px;">
+        <button class="admin-btn" style="flex:1;" onclick="submitRequest()">Submit</button>
+        <button class="admin-btn" style="flex:1;" onclick="closeRequest()">Cancel</button>
+      </div>
     </div>
   </div>
 
@@ -807,6 +768,65 @@ font-weight:900;
         <button class="action cancel" onclick="exportCSV()">Export Signups CSV</button>
       </div>
 
+      <!-- ADMIN ALERT TICKER (requests) -->
+      <div id="adminTicker" class="admin-ticker" style="display:none;"></div>
+
+      <!-- SALES ENTRY -->
+      <div class="admin-card">
+        <div class="admin-card-title">Record a sale</div>
+        <div class="admin-row">
+          <select id="saleItem" class="admin-input"></select>
+          <input id="saleQty" class="admin-input" type="number" min="1" value="1" />
+          <button class="admin-btn" onclick="recordSale()">Buy</button>
+        </div>
+        <div class="admin-row">
+          <input id="saleNote" class="admin-input" placeholder="optional note (who/where)" />
+        </div>
+      </div>
+
+      <!-- PROFIT SUMMARY -->
+      <div class="admin-card">
+        <div class="admin-card-title">Profit Tracker</div>
+
+        <div class="profit-top">
+          <div class="profit-ticker" id="profitTicker">$0.00</div>
+          <div class="profit-meta" id="profitMeta">Today: $0 • Week: $0</div>
+        </div>
+
+        <canvas id="profitChart" height="140"></canvas>
+
+        <div class="daily-target" id="dailyTarget">
+          Today’s target: —
+        </div>
+      </div>
+
+      <!-- ANALYTICS DROPDOWN -->
+      <div class="admin-card">
+        <button class="admin-btn wide" onclick="toggleAnalytics()">📊 Analytics (open/close)</button>
+
+        <div id="analyticsPanel" style="display:none; margin-top:12px;">
+          <div class="tabs">
+            <button class="tab" onclick="showTab('mrr')">MRR Waterfall</button>
+            <button class="tab" onclick="showTab('nrr')">NRR</button>
+            <button class="tab" onclick="showTab('growth')">Cumulative ARR/MRR</button>
+            <button class="tab" onclick="showTab('hot')">HOT Items</button>
+          </div>
+
+          <div class="tabpanel" id="tab-mrr"><canvas id="mrrChart" height="160"></canvas></div>
+          <div class="tabpanel" id="tab-nrr"><canvas id="nrrChart" height="160"></canvas></div>
+          <div class="tabpanel" id="tab-growth"><canvas id="growthChart" height="160"></canvas></div>
+          <div class="tabpanel" id="tab-hot"><canvas id="hotChart" height="160"></canvas></div>
+        </div>
+      </div>
+
+      <!-- COST SETTINGS (editable) -->
+      <div class="admin-card">
+        <div class="admin-card-title">Cost settings (edit anytime)</div>
+        <p style="opacity:.75; margin:0 0 10px;">These are used to compute profit (revenue − cost).</p>
+        <div id="costEditor"></div>
+        <button class="admin-btn wide" onclick="saveCosts()">Save Costs</button>
+      </div>
+
       <hr class="sep">
       <div id="adminData"></div>
 
@@ -815,66 +835,6 @@ font-weight:900;
         <button class="action submit" onclick="wipeAll()">Wipe Device Data</button>
       </div>
     </div>
-    <!-- ADMIN ALERT TICKER (requests) -->
-<div id="adminTicker" class="admin-ticker" style="display:none;"></div>
-
-<!-- SALES ENTRY -->
-<div class="admin-card">
-<div class="admin-card-title">Record a sale</div>
-
-<div class="admin-row">
-<select id="saleItem" class="admin-input"></select>
-<input id="saleQty" class="admin-input" type="number" min="1" value="1" />
-<button class="admin-btn" onclick="recordSale()">Buy</button>
-</div>
-
-<div class="admin-row">
-<input id="saleNote" class="admin-input" placeholder="optional note (who/where)" />
-</div>
-</div>
-
-<!-- PROFIT SUMMARY -->
-<div class="admin-card">
-<div class="admin-card-title">Profit Tracker</div>
-
-<div class="profit-top">
-<div class="profit-ticker" id="profitTicker">$0.00</div>
-<div class="profit-meta" id="profitMeta">Today: $0 • Week: $0</div>
-</div>
-
-<canvas id="profitChart" height="140"></canvas>
-
-<div class="daily-target" id="dailyTarget">
-Today’s target: —
-</div>
-</div>
-
-<!-- ANALYTICS DROPDOWN -->
-<div class="admin-card">
-<button class="admin-btn wide" onclick="toggleAnalytics()">📊 Analytics (open/close)</button>
-
-<div id="analyticsPanel" style="display:none; margin-top:12px;">
-<div class="tabs">
-<button class="tab" onclick="showTab('mrr')">MRR Waterfall</button>
-<button class="tab" onclick="showTab('nrr')">NRR</button>
-<button class="tab" onclick="showTab('growth')">Cumulative ARR/MRR</button>
-<button class="tab" onclick="showTab('hot')">HOT Items</button>
-</div>
-
-<div class="tabpanel" id="tab-mrr"><canvas id="mrrChart" height="160"></canvas></div>
-<div class="tabpanel" id="tab-nrr"><canvas id="nrrChart" height="160"></canvas></div>
-<div class="tabpanel" id="tab-growth"><canvas id="growthChart" height="160"></canvas></div>
-<div class="tabpanel" id="tab-hot"><canvas id="hotChart" height="160"></canvas></div>
-</div>
-</div>
-
-<!-- COST SETTINGS (editable) -->
-<div class="admin-card">
-<div class="admin-card-title">Cost settings (edit anytime)</div>
-<p style="opacity:.75; margin:0 0 10px;">These are used to compute profit (revenue − cost).</p>
-<div id="costEditor"></div>
-<button class="admin-btn wide" onclick="saveCosts()">Save Costs</button>
-</div>
   </div>
 
   <!-- TEXT MODAL -->
@@ -917,817 +877,747 @@ Today’s target: —
     <button onclick="adminLogin()">Login</button>
   </div>
 
-<script>
-  function toggleMenu(force){
-const panel = document.getElementById("menuPanel");
-const showIt = (typeof force === "boolean") ? force : (panel.style.display !== "block");
-panel.style.display = showIt ? "block" : "none";
-}
-/*** CONFIG ***/
-const ADMIN_CODE = "1234";        // change this
-const SUB_LENGTH_DAYS = 7;        // weekly subscription
-let selectedTier = null;
-
-/*** TIERS + PERKS ***/
-const perksByTier = {
-  "Basic":   { firstAccess: true },
-  "VIP":     { firstAccess: true, weeklyFreeTreat: true, vipLine: true },
-  "Elite 25":{ firstAccess: true, weeklyFreeTreat: true, vipLine: true, secretDrops: true, priority: true }
-};
-
-/*** TIMER (10 minutes demo) ***/
-let countdown = 600;
-const timerEl = document.getElementById("timer");
-setInterval(()=>{
-  let m = Math.floor(countdown/60);
-  let s = countdown%60;
-  timerEl.textContent = `${m}:${s<10?'0'+s:s}`;
-  countdown = Math.max(0, countdown-1);
-},1000);
-
-function scrollToClubs(){
-  document.getElementById("clubs").scrollIntoView({behavior:"smooth"});
-}
-
-/*** MODAL HELPERS ***/
-function show(elId){ document.getElementById(elId).style.display = "block"; }
-function hide(elId){ document.getElementById(elId).style.display = "none"; }
-
-/*** SIGNUP FLOW ***/
-function pickTier(tier){
-  selectedTier = tier;
-  document.getElementById("signupTitle").innerText = `Join ${tier}`;
-  show("signupModal");
-}
-
-function closeSignup(){
-  hide("signupModal");
-}
-
-function checkOther(){
-  const v = document.getElementById("timePref").value;
-  document.getElementById("otherField").style.display = (v === "Other") ? "block" : "none";
-}
-
-function submitSignup(){
-  const first = document.getElementById("firstName").value.trim();
-  const last  = document.getElementById("lastName").value.trim();
-  const phone = document.getElementById("phone").value.trim();
-  const smsConsent = document.getElementById("smsConsent").checked;
-
-  const lunch = document.getElementById("lunch").value;
-  const time  = document.getElementById("timePref").value;
-  const other = document.getElementById("otherField").value.trim();
-
-  if(!selectedTier){ alert("Pick a club first."); return; }
-  if(!first || !last){ alert("Add first + last name."); return; }
-  if(!lunch){ alert("Select A or B lunch."); return; }
-  if(!time){ alert("Select when you buy."); return; }
-  if(time === "Other" && !other){ alert("Type the class + period."); return; }
-
-  // If they typed a phone, require consent checkbox
-  if(phone && !smsConsent){
-    alert('To get texts, check the consent box (you can opt out anytime by replying "STOP").');
-    return;
-  }
-
-  const joined = new Date();
-  const due = new Date(joined.getTime() + SUB_LENGTH_DAYS*24*60*60*1000);
-
-  const data = {
-    id: cryptoId(),
-    tier: selectedTier,
-    first, last,
-    phone,
-    smsConsent,
-    lunch,
-    time,
-    other: (time === "Other") ? other : "",
-    joinedISO: joined.toISOString(),
-    dueISO: due.toISOString(),
-    cancelled: false,
-    cancelledAtISO: "",
-    smsOptedOut: false,
-
-    // perks available for tier
-    perks: perksByTier[selectedTier],
-
-    // perk usage toggles (only applies if perk exists in perks)
-    perksUsed: {
-      weeklyFreeTreat: false,
-      vipLine: false,
-      secretDrops: false,
-      priority: false
-    }
-  };
-
-  const users = loadUsers();
-  users.push(data);
-  saveUsers(users);
-
-  // Flashy "subscribed" message (simulated)
-  if (phone && smsConsent){
-    const firstLiner = randomHookLine(first);
-    alert(
-      `${firstLiner}\n\n✅ You’re now receiving restocks + secret treats + stock-up alerts.\nReply STOP to opt out.\n\nWant more perks? Upgrade to ELITE 25 👑`
-    );
-  } else {
-    alert(`You're in ✅\n${selectedTier}\nCancel anytime.`);
-  }
-
-  closeSignup();
-  resetFormFields();
-}
-
-function resetFormFields(){
-  document.getElementById("firstName").value="";
-  document.getElementById("lastName").value="";
-  document.getElementById("phone").value="";
-  document.getElementById("smsConsent").checked=false;
-  document.getElementById("lunch").value="";
-  document.getElementById("timePref").value="";
-  document.getElementById("otherField").value="";
-  document.getElementById("otherField").style.display="none";
-}
-
-/*** Random hook line + upsell seed ***/
-function randomHookLine(name){
-  const hooks = [
-    "Click before we sell out",
-    "You’ve been chosen",
-    "Your access just unlocked",
-    "Don’t miss this week’s drop",
-    "VIP eyes only (for now)",
-    "Lowkey… this one disappears fast"
-  ];
-  const pick = hooks[Math.floor(Math.random()*hooks.length)];
-  return `${name} — ${pick}.`;
-}
-
-/*** STORAGE ***/
-function loadUsers(){
-  return JSON.parse(localStorage.getItem("drop_users") || "[]");
-}
-function saveUsers(users){
-  localStorage.setItem("drop_users", JSON.stringify(users));
-}
-function cryptoId(){
-  return "id_" + Math.random().toString(16).slice(2) + "_" + Date.now();
-}
-
-/*** ADMIN ***/
-function adminLogin(){
-const code = document.getElementById("adminCode").value.trim();
-if(code === ADMIN_CODE){
-loadAdmin();
-show("adminPanel");
-initAdminDashboard(); // ✅ add this line
-} else {
-alert("Wrong code.");
-}
-}
-function closeAdmin(){
-  hide("adminPanel");
-}
-function isExpired(u){
-  if(u.cancelled) return true;
-  return new Date() > new Date(u.dueISO);
-}
-function fmt(ts){
-  try { return new Date(ts).toLocaleString(); } catch(e){ return ""; }
-}
-
-function loadAdmin(){
-  const users = loadUsers();
-  if(users.length === 0){
-    document.getElementById("adminData").innerHTML = `<div class="table-card">No signups yet.</div>`;
-    return;
-  }
-
-  let html = "";
-  users.forEach((u)=>{
-    const expired = isExpired(u);
-    const status = expired ? "Expired" : "Active";
-    const statusColor = expired ? "rgba(255,59,59,0.95)" : "rgba(56,214,107,0.95)";
-
-    const buyTime = u.time + (u.other ? ` (${u.other})` : "");
-    const canSMS = !!(u.phone && u.smsConsent && !u.smsOptedOut);
-
-    html += `
-      <div class="table-card">
-        <strong>${escapeHtml(u.first)} ${escapeHtml(u.last)}</strong>
-
-        <div class="kv">
-          Tier: <b>${escapeHtml(u.tier)}</b><br>
-          Lunch: <b>${escapeHtml(u.lunch)}</b><br>
-          Buy time: <b>${escapeHtml(buyTime)}</b><br>
-          Joined: <b>${escapeHtml(fmt(u.joinedISO))}</b><br>
-          Due: <b>${escapeHtml(fmt(u.dueISO))}</b><br>
-          Status: <b style="color:${statusColor}">${status}</b><br>
-          Phone: <b>${u.phone ? escapeHtml(u.phone) : "—"}</b><br>
-          SMS Eligible: <b>${canSMS ? "Yes" : "No"}</b>
-        </div>
-
-        <div class="admin-actions">
-          <button class="btn-blue" onclick="renew('${u.id}')">Renew +${SUB_LENGTH_DAYS}d</button>
-          <button class="btn-reset" onclick="toggleCancel('${u.id}')">${u.cancelled ? "Un-cancel" : "Cancel Sub"}</button>
-        </div>
-
-        <div class="admin-actions" style="margin-top:8px;">
-          ${perkButton(u, "weeklyFreeTreat", "Free Treat")}
-          ${perkButton(u, "vipLine", "VIP Line")}
-          ${perkButton(u, "secretDrops", "Secret Drop")}
-          ${perkButton(u, "priority", "Priority")}
-        </div>
-
-        <div class="small-note" style="margin-top:8px;">
-          Note: Basic has no perks to mark “used” except first access (not tracked). VIP/Elite perks are tracked here.
-        </div>
-      </div>
-    `;
-  });
-
-  document.getElementById("adminData").innerHTML = html;
-}
-
-function perkButton(u, perkKey, label){
-  // Only show if this tier includes the perk
-  if(!u.perks || !u.perks[perkKey]) return "";
-  const used = !!(u.perksUsed && u.perksUsed[perkKey]);
-  const cls = used ? "btn-warn" : "btn-used";
-  const text = used ? `Undo ${label}` : `Mark ${label} Used`;
-  return `<button class="${cls}" onclick="togglePerk('${u.id}','${perkKey}')">${text}</button>`;
-}
-
-function togglePerk(id, perkKey){
-  const users = loadUsers();
-  const u = users.find(x=>x.id===id);
-  if(!u) return;
-
-  // Only allow if perk exists for that tier
-  if(!u.perks || !u.perks[perkKey]) return;
-
-  if(!u.perksUsed) u.perksUsed = {};
-  u.perksUsed[perkKey] = !u.perksUsed[perkKey];
-
-  saveUsers(users);
-  loadAdmin();
-}
-
-function toggleCancel(id){
-  const users = loadUsers();
-  const u = users.find(x=>x.id===id);
-  if(!u) return;
-
-  u.cancelled = !u.cancelled;
-  u.cancelledAtISO = u.cancelled ? new Date().toISOString() : "";
-  saveUsers(users);
-  loadAdmin();
-}
-
-function renew(id){
-  const users = loadUsers();
-  const u = users.find(x=>x.id===id);
-  if(!u) return;
-
-  const base = Math.max(Date.now(), new Date(u.dueISO).getTime());
-  u.dueISO = new Date(base + SUB_LENGTH_DAYS*24*60*60*1000).toISOString();
-  u.cancelled = false;
-  u.cancelledAtISO = "";
-  saveUsers(users);
-  loadAdmin();
-}
-
-function wipeAll(){
-  const ok = confirm("Wipe ALL signups on this device?");
-  if(!ok) return;
-  localStorage.removeItem("drop_users");
-  loadAdmin();
-}
-
-/*** TEXT SENDER (CSV generator) ***/
-function openTextModal(){
-  document.getElementById("textType").value = "new_stock";
-  document.getElementById("audience").value = "all";
-  document.getElementById("itemName").value = "";
-  document.getElementById("itemName").style.display = "none";
-  show("textModal");
-}
-function closeTextModal(){
-  hide("textModal");
-}
-function toggleItemField(){
-  const t = document.getElementById("textType").value;
-  document.getElementById("itemName").style.display = (t === "new_item") ? "block" : "none";
-}
-
-function generateTextCSV(){
-  const type = document.getElementById("textType").value;
-  const audience = document.getElementById("audience").value;
-  const itemName = document.getElementById("itemName").value.trim();
-
-  if(type === "new_item" && !itemName){
-    alert("Type the item name first.");
-    return;
-  }
-
-  const users = loadUsers();
-
-  // Only include: has phone + consent + not opted out
-  let targets = users.filter(u => u.phone && u.smsConsent && !u.smsOptedOut);
-
-  // Audience filter
-  if(audience === "vip_plus"){
-    targets = targets.filter(u => u.tier === "VIP" || u.tier === "Elite 25");
-  }
-  if(audience === "elite_only"){
-    targets = targets.filter(u => u.tier === "Elite 25");
-  }
-
-  // Secret drop should be Elite only
-  if(type === "secret_drop"){
-    targets = targets.filter(u => u.tier === "Elite 25");
-  }
-
-  if(targets.length === 0){
-    alert("No eligible phone numbers for that audience/type.");
-    return;
-  }
-
-  const rows = [["phone","message"]];
-  for(const u of targets){
-    const msg = buildSms(u, type, itemName);
-    rows.push([u.phone, msg]);
-  }
-
-  const csv = rows.map(r => r.map(x => `"${String(x).replaceAll('"','""')}"`).join(",")).join("\n");
-  downloadFile("texts_to_send.csv", csv, "text/csv");
-  alert(`Generated CSV for ${targets.length} texts ✅`);
-  closeTextModal();
-}
-
-function buildSms(u, type, itemName){
-  const opener = randomHookLine(u.first);
-
-  // Template core
-  let core = "";
-  if(type === "new_stock"){
-    core = "Restock just landed. Stock up before lunch.";
-  } else if(type === "leaving_soon"){
-    core = "Heads up — stock is leaving soon. Last chance before it’s gone.";
-  } else if(type === "new_item"){
-    core = `New item drop: ${itemName}. Limited amount today.`;
-  } else if(type === "secret_drop"){
-    core = "Secret drop active. Ask for the hidden menu item today.";
-  }
-
-  // Upsell (every text)
-  let upsell = "";
-  if(u.tier === "Basic"){
-    upsell = "Want more perks? Upgrade to VIP for weekly free treats or ELITE 25 for secret drops 👑";
-  } else if(u.tier === "VIP"){
-    upsell = "Level up to ELITE 25 for priority + secret drops 👑";
-  } else {
-    upsell = "Elite status stays undefeated 👑";
-  }
-
-  // STOP line
-  const stop = 'Reply STOP to opt out.';
-
-  // Keep it short-ish for SMS
-  return `${opener} ${core} ${upsell} ${stop}`;
-}
-
-/*** Export signups CSV ***/
-function exportCSV(){
-  const users = loadUsers();
-  const headers = [
-    "Tier","First","Last","Phone","SMSConsent","Lunch","BuyTime","Other","Joined","Due","Expired","Cancelled",
-    "Used_FreeTreat","Used_VIPLine","Used_SecretDrop","Used_Priority"
-  ];
-  const rows = users.map(u=>[
-    u.tier, u.first, u.last, u.phone || "", u.smsConsent ? "Yes":"No",
-    u.lunch, u.time, u.other || "",
-    u.joinedISO, u.dueISO,
-    isExpired(u) ? "Yes":"No",
-    u.cancelled ? "Yes":"No",
-    u.perksUsed?.weeklyFreeTreat ? "Yes":"No",
-    u.perksUsed?.vipLine ? "Yes":"No",
-    u.perksUsed?.secretDrops ? "Yes":"No",
-    u.perksUsed?.priority ? "Yes":"No"
-  ]);
-
-  const csv = [headers, ...rows]
-    .map(r=>r.map(x=>`"${String(x).replaceAll('"','""')}"`).join(","))
-    .join("\n");
-
-  downloadFile("drop_signups.csv", csv, "text/csv");
-}
-
-/*** Utils ***/
-function escapeHtml(str){
-  return String(str)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-}
-function downloadFile(filename, content, type){
-  const blob = new Blob([content], {type});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  a.click();
-  URL.revokeObjectURL(url);
-}
-  function openRequest(){ document.getElementById("requestModal").style.display="flex"; }
-function closeRequest(){ document.getElementById("requestModal").style.display="none"; }
-
-function normItem(s){
-return (s||"")
-.toLowerCase()
-.replace(/[^a-z0-9\s]/g,"")
-.replace(/\s+/g," ")
-.trim();
-}
-
-function getRequests(){ return JSON.parse(localStorage.getItem("itemRequests")||"[]"); }
-function setRequests(x){ localStorage.setItem("itemRequests", JSON.stringify(x)); }
-
-function submitRequest(){
-const raw = document.getElementById("requestInput").value;
-const n = normItem(raw);
-if(!n){ alert("Type an item first"); return; }
-const reqs = getRequests();
-reqs.push({ raw, n, ts: Date.now() });
-setRequests(reqs);
-document.getElementById("requestInput").value="";
-closeRequest();
-alert("Request submitted 👀");
-}
-  // ---------- DATA MODELS ----------
-const DEFAULT_ITEMS = [
-// name, sellPrice, casePackUnits, casePackCost
-// (these costs are starting guesses from common retailers; you can edit in admin)
-{ key:"redbull_original", name:"Redbull (original)", sell:4.50, units:24, cost:48.67 }, // example [oai_citation:10‡Walmart.com](https://www.walmart.com/ip/Red-Bull-Energy-Drink-8-4-fl-oz-Pack-of-24-Cans/26779613?utm_source=chatgpt.com)
-{ key:"redbull_red", name:"Redbull (red)", sell:4.95, units:24, cost:63.00 }, // example [oai_citation:11‡Walmart.com](https://www.walmart.com/ip/Red-Bull-Red-Edition-Watermelon-Energy-Drink-8-4-fl-oz-Pack-of-24-Cans/297276472?utm_source=chatgpt.com)
-{ key:"monster_white", name:"Monster (white)", sell:6.00, units:24, cost:42.48 }, // example [oai_citation:12‡Sam's Club](https://www.samsclub.com/ip/monster-zero-ultra-energy-drink-24pk-16oz-can/7084701554?utm_source=chatgpt.com)
-
-{ key:"coke", name:"Coke (original)", sell:3.00, units:24, cost:14.77 }, // example [oai_citation:13‡Walmart.com](https://www.walmart.com/ip/Coca-Cola-Classic-Soda-Pop-12-fl-oz-Cans-24-Pack/10535216?utm_source=chatgpt.com)
-{ key:"fanta", name:"Fanta (original)", sell:3.75, units:24, cost:14.77 }, // example [oai_citation:14‡Walmart.com](https://www.walmart.com/ip/Fanta-Orange-Fruit-Soda-Pop-12-fl-oz-24-Pack-Cans/10535174?utm_source=chatgpt.com)
-{ key:"mtndew", name:"Mtn Dew (original)", sell:5.00, units:24, cost:12.48 }, // example [oai_citation:15‡Walmart.com](https://www.walmart.com/ip/Caffeine-Free-Mountain-Dew-Citrus-Soda-12-oz-24-Cans/17787301?utm_source=chatgpt.com)
-
-// Snacks are often bought in 40ct school multipacks
-{ key:"doritos_nacho", name:"Doritos (nacho)", sell:3.75, units:40, cost:19.20 }, // 40ct example [oai_citation:16‡Amazon](https://www.amazon.com/Doritos-Nacho-Cheese-Flavored-Tortilla/dp/B072C8HBGW?utm_source=chatgpt.com)
-{ key:"doritos_blue", name:"Doritos (blue)", sell:4.25, units:40, cost:19.20 }, // treat as same cost baseline
-{ key:"funyun", name:"Funyun", sell:4.90, units:40, cost:13.45 }, // example [oai_citation:17‡Walmart.com](https://www.walmart.com/ip/Funyuns-Onion-Flavored-Rings-0-75-Ounce-Bags-Pack-of-40/936002814?utm_source=chatgpt.com)
-{ key:"hot_cheetos", name:"Hot Cheetos", sell:5.00, units:40, cost:31.80 }, // multipack example [oai_citation:18‡Walmart.com](https://www.walmart.com/ip/Cheetos-Crunchy-Flamin-Hot-Cheese-Flavored-Snacks-1-oz-40-Count/1532599643?utm_source=chatgpt.com)
-
-// Gum (not really “24 pack”; we still model a bulk pack)
-{ key:"spearmint", name:"Spearmint", sell:3.00, units:40, cost:18.99 }, // bulk pack example [oai_citation:19‡Costco Business Center](https://www.costcobusinessdelivery.com/wrigleys-spearmint-chewing-gum%2C-original-50-cent-gum%2C-5-sticks%2C-40-ct.product.10178478.html?utm_source=chatgpt.com)
-{ key:"hubba", name:"Hubba Bubba", sell:3.75, units:12, cost:11.49 }, // 12 pk example [oai_citation:20‡Sam's Club](https://www.samsclub.com/ip/bubble-tape-asst-12-pk/2200001772?utm_source=chatgpt.com)
-{ key:"ice_breakers", name:"Ice Breakers Cube", sell:6.00, units:100, cost:8.37 }, // 100ct pouch example [oai_citation:21‡Walmart.com](https://www.walmart.com/ip/Ice-Breakers-Ice-Cubes-Spearmint-Sugar-Free-Chewing-Gum-Pouch-8-11-oz-100-Pieces/106667580?utm_source=chatgpt.com)
-];
-
-function loadItems(){
-const saved = localStorage.getItem("itemsCatalog");
-return saved ? JSON.parse(saved) : DEFAULT_ITEMS;
-}
-function saveItems(items){
-localStorage.setItem("itemsCatalog", JSON.stringify(items));
-}
-
-function loadSales(){
-return JSON.parse(localStorage.getItem("salesLog")||"[]");
-}
-function saveSales(sales){
-localStorage.setItem("salesLog", JSON.stringify(sales));
-}
-
-// ---------- ADMIN UI INIT ----------
-let items = loadItems();
-let charts = {};
-
-function money(x){
-return (x||0).toLocaleString(undefined,{style:"currency",currency:"USD"});
-}
-
-function unitCost(item){
-return item.cost / item.units; // cost per unit
-}
-
-function populateSaleDropdown(){
-const sel = document.getElementById("saleItem");
-if(!sel) return;
-sel.innerHTML = items.map(i => `<option value="${i.key}">${i.name} (${money(i.sell)})</option>`).join("");
-}
-
-function renderCostEditor(){
-const wrap = document.getElementById("costEditor");
-if(!wrap) return;
-wrap.innerHTML = items.map(i => `
-<div style="display:grid; grid-template-columns: 1.4fr .8fr .8fr; gap:10px; margin-top:10px;">
-<div class="admin-input" style="display:flex; align-items:center;">${i.name}</div>
-<input class="admin-input" type="number" step="0.01" id="cost_${i.key}" value="${i.cost}">
-<input class="admin-input" type="number" step="1" id="units_${i.key}" value="${i.units}">
-</div>
-<div style="opacity:.65; font-size:12px; margin-top:4px;">
-Cost per unit: <b>${money(unitCost(i))}</b> • Sell: <b>${money(i.sell)}</b> • Margin: <b>${money(i.sell - unitCost(i))}</b>
-</div>
-`).join("");
-}
-
-function saveCosts(){
-items = items.map(i => ({
-...i,
-cost: parseFloat(document.getElementById(`cost_${i.key}`).value || i.cost),
-units: parseFloat(document.getElementById(`units_${i.key}`).value || i.units),
-}));
-saveItems(items);
-alert("Saved ✅");
-refreshAllAdmin();
-}
-
-// ---------- SALES ----------
-function recordSale(){
-const key = document.getElementById("saleItem").value;
-const qty = Math.max(1, parseInt(document.getElementById("saleQty").value||"1",10));
-const note = (document.getElementById("saleNote").value||"").trim();
-const item = items.find(i=>i.key===key);
-if(!item) return;
-
-const sales = loadSales();
-sales.push({
-ts: Date.now(),
-key,
-name: item.name,
-qty,
-sell: item.sell,
-costPer: unitCost(item),
-note
-});
-saveSales(sales);
-
-document.getElementById("saleQty").value = 1;
-document.getElementById("saleNote").value = "";
-refreshAllAdmin();
-}
-
-// ---------- PROFIT CALCS ----------
-function startOfDay(ts){
-const d = new Date(ts);
-d.setHours(0,0,0,0);
-return d.getTime();
-}
-function startOfWeek(ts){
-const d = new Date(ts);
-const day = d.getDay(); // 0 Sun ... 6 Sat
-// School week: Mon-Fri. We'll treat week start as Monday.
-const diffToMon = (day === 0 ? -6 : 1 - day);
-d.setDate(d.getDate() + diffToMon);
-d.setHours(0,0,0,0);
-return d.getTime();
-}
-function isSellDay(dateObj){
-const day = dateObj.getDay();
-return day !== 0 && day !== 6; // no Sun/Sat
-}
-function remainingSellDaysThisWeek(nowTs){
-const now = new Date(nowTs);
-let count = 0;
-const d = new Date(now);
-d.setHours(0,0,0,0);
-// include today if weekday
-for(let i=0;i<7;i++){
-const test = new Date(d);
-test.setDate(d.getDate()+i);
-if(test.getTime() < startOfWeek(nowTs)) continue;
-if(test.getTime() > startOfWeek(nowTs)+6*86400000) break;
-if(test >= new Date(now.setHours(0,0,0,0)) && isSellDay(test)) count++;
-}
-return Math.max(1, count);
-}
-
-function profitForRange(sales, fromTs, toTs){
-let rev=0, cogs=0;
-for(const s of sales){
-if(s.ts>=fromTs && s.ts<toTs){
-rev += s.sell * s.qty;
-cogs += s.costPer * s.qty;
-}
-}
-return { rev, cogs, profit: rev - cogs };
-}
-
-function dailyProfitSeries(daysBack=7){
-const sales = loadSales();
-const now = Date.now();
-const series = [];
-for(let i=daysBack-1;i>=0;i--){
-const dayStart = startOfDay(now - i*86400000);
-const dayEnd = dayStart + 86400000;
-const p = profitForRange(sales, dayStart, dayEnd).profit;
-series.push({ dayStart, profit:p });
-}
-return series;
-}
-
-// ---------- REQUEST TICKER FOR ADMIN ----------
-function computeTopRequests(threshold=5){
-const reqs = getRequests();
-const map = new Map();
-
-for(const r of reqs){
-// super simple similarity bucket: first 18 chars normalized
-const bucket = r.n.slice(0,18);
-map.set(bucket, (map.get(bucket)||0) + 1);
-}
-
-let best = null;
-for(const [bucket,count] of map.entries()){
-if(count>=threshold){
-if(!best || count>best.count){
-best = { bucket, count };
-}
-}
-}
-return best;
-}
-
-function renderAdminTicker(){
-const t = computeTopRequests(5);
-const el = document.getElementById("adminTicker");
-if(!el) return;
-if(!t){ el.style.display="none"; return; }
-const msg = `${t.count} people requested: “${t.bucket}…” (consider adding it to the menu)`;
-el.style.display="block";
-el.setAttribute("data-text", msg + " • " + msg + " • " + msg);
-}
-
-// ---------- CHARTS ----------
-function destroyChart(id){
-if(charts[id]){ charts[id].destroy(); delete charts[id]; }
-}
-
-function renderProfitChart(){
-const ctx = document.getElementById("profitChart");
-if(!ctx) return;
-
-const series = dailyProfitSeries(10);
-const labels = series.map(x => new Date(x.dayStart).toLocaleDateString());
-const data = series.map(x => Math.round(x.profit*100)/100);
-
-destroyChart("profit");
-charts.profit = new Chart(ctx, {
-type: "line",
-data: { labels, datasets: [{ label:"Profit", data }] },
-options: {
-responsive:true,
-plugins:{ legend:{ display:false } },
-scales:{ y:{ ticks:{ callback:(v)=>"$"+v } } }
-}
-});
-}
-
-function renderProfitTicker(){
-const sales = loadSales();
-const now = Date.now();
-
-const today = profitForRange(sales, startOfDay(now), startOfDay(now)+86400000);
-const weekStart = startOfWeek(now);
-const week = profitForRange(sales, weekStart, weekStart + 7*86400000);
-
-const ticker = document.getElementById("profitTicker");
-const meta = document.getElementById("profitMeta");
-if(!ticker || !meta) return;
-
-ticker.textContent = money(week.profit);
-ticker.style.color = week.profit >= 0 ? "#6dff9a" : "#ff6d6d";
-meta.textContent = `Today: ${money(today.profit)} • Week Revenue: ${money(week.rev)} • Week Cost: ${money(week.cogs)}`;
-
-// daily target to keep ticker up by end of week
-const remain = remainingSellDaysThisWeek(now);
-const needed = week.profit < 0 ? Math.ceil((-week.profit / remain)*100)/100 : 0;
-const targetEl = document.getElementById("dailyTarget");
-if(targetEl){
-targetEl.textContent = needed > 0
-? `Today’s target to get back positive (spread over ${remain} sell days): ${money(needed)} profit/day`
-: `Today’s target: Keep it green ✅ (you’re positive this week)`;
-targetEl.style.borderColor = week.profit >= 0 ? "rgba(56,214,107,0.18)" : "rgba(255,109,109,0.28)";
-targetEl.style.background = week.profit >= 0 ? "rgba(56,214,107,0.10)" : "rgba(255,109,109,0.10)";
-}
-}
-
-// ---------- SaaS-ish charts based on subscriptions + sales ----------
-// NOTE: These are only meaningful if you log subscription signups + expirations in your admin tool.
-function computeMRR(){
-const subs = JSON.parse(localStorage.getItem("signups")||"[]"); // adjust this key to your real signup storage
-const prices = { basic: 5, vip: 10, elite: 20 }; // edit to your real club pricing
-const now = Date.now();
-
-const active = subs.filter(s => !s.expiresAt || s.expiresAt > now);
-const mrr = active.reduce((sum,s)=> sum + (prices[(s.club||"").toLowerCase()]||0), 0);
-return { activeCount: active.length, mrr, prices };
-}
-
-function renderMRRCharts(){
-const { mrr } = computeMRR();
-
-// Waterfall-style (fake waterfall using bar)
-const mrrCtx = document.getElementById("mrrChart");
-if(mrrCtx){
-destroyChart("mrr");
-charts.mrr = new Chart(mrrCtx,{
-type:"bar",
-data:{ labels:["Start MRR","New","Churn","End MRR"], datasets:[{ data:[mrr, 0, 0, mrr] }] },
-options:{ plugins:{ legend:{display:false} } }
-});
-}
-
-// NRR
-const nrrCtx = document.getElementById("nrrChart");
-if(nrrCtx){
-destroyChart("nrr");
-const nrr = 1.0; // until you track expansion/churn events
-charts.nrr = new Chart(nrrCtx,{
-type:"bar",
-data:{ labels:["NRR"], datasets:[{ data:[Math.round(nrr*100)] }] },
-options:{ plugins:{ legend:{display:false} }, scales:{ y:{ suggestedMax:140, ticks:{ callback:v=>v+"%" } } } }
-});
-}
-
-// Growth line (simple: MRR constant until you log over time)
-const gCtx = document.getElementById("growthChart");
-if(gCtx){
-destroyChart("growth");
-charts.growth = new Chart(gCtx,{
-type:"line",
-data:{ labels:["Now"], datasets:[{ data:[mrr], label:"MRR" }] },
-options:{ plugins:{ legend:{display:false} } }
-});
-}
-
-// HOT items (from sales)
-const hotCtx = document.getElementById("hotChart");
-if(hotCtx){
-const sales = loadSales();
-const counts = new Map();
-for(const s of sales){
-counts.set(s.name, (counts.get(s.name)||0) + s.qty);
-}
-const sorted = [...counts.entries()].sort((a,b)=>b[1]-a[1]).slice(0,8);
-destroyChart("hot");
-charts.hot = new Chart(hotCtx,{
-type:"bar",
-data:{ labels: sorted.map(x=>x[0]), datasets:[{ data: sorted.map(x=>x[1]) }] },
-options:{ plugins:{ legend:{display:false} } }
-});
-}
-}
-
-// ---------- ANALYTICS UI ----------
-function toggleAnalytics(){
-const p = document.getElementById("analyticsPanel");
-if(!p) return;
-p.style.display = (p.style.display==="none" || !p.style.display) ? "block" : "none";
-if(p.style.display==="block"){
-showTab("mrr");
-renderMRRCharts();
-}
-}
-function showTab(name){
-["mrr","nrr","growth","hot"].forEach(k=>{
-const el = document.getElementById("tab-"+k);
-if(el) el.style.display = (k===name) ? "block" : "none";
-});
-}
-
-// ---------- MASTER REFRESH ----------
-function refreshAllAdmin(){
-populateSaleDropdown();
-renderCostEditor();
-renderProfitTicker();
-renderProfitChart();
-renderAdminTicker();
-// only render SaaS charts if panel open
-const p = document.getElementById("analyticsPanel");
-if(p && p.style.display==="block") renderMRRCharts();
-}
-
-// Call this after admin login success:
-function onAdminLoginSuccess(){
-refreshAllAdmin();
-}
-  function initAdminDashboard() {
-// put all admin-startup stuff here
-populateSaleDropdown?.(); // fills the item dropdown (if you added it)
-renderProfitChart?.(); // draws charts (if you added them)
-renderProfitTicker?.(); // updates the green/red ticker (if you added it)
-// anything else you want to refresh when admin logs in
-}
-</script>
+  <!-- IMPORTANT: Chart.js MUST load before our script uses Chart() -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    /*** CONFIG ***/
+    const ADMIN_CODE = "1234";        // change this
+    const SUB_LENGTH_DAYS = 7;        // weekly subscription
+    let selectedTier = null;
+
+    /*** TIERS + PERKS ***/
+    const perksByTier = {
+      "Basic":   { firstAccess: true },
+      "VIP":     { firstAccess: true, weeklyFreeTreat: true, vipLine: true },
+      "Elite 25":{ firstAccess: true, weeklyFreeTreat: true, vipLine: true, secretDrops: true, priority: true }
+    };
+
+    /*** TIMER (10 minutes demo) ***/
+    let countdown = 600;
+    const timerEl = document.getElementById("timer");
+    setInterval(()=>{
+      let m = Math.floor(countdown/60);
+      let s = countdown%60;
+      timerEl.textContent = `${m}:${s<10?'0'+s:s}`;
+      countdown = Math.max(0, countdown-1);
+    },1000);
+
+    function scrollToClubs(){
+      document.getElementById("clubs").scrollIntoView({behavior:"smooth"});
+    }
+
+    /*** MENU ***/
+    function toggleMenu(force){
+      const panel = document.getElementById("menuPanel");
+      const showIt = (typeof force === "boolean") ? force : (panel.style.display !== "block");
+      panel.style.display = showIt ? "block" : "none";
+    }
+
+    /*** MODAL HELPERS ***/
+    function show(elId){ document.getElementById(elId).style.display = "block"; }
+    function hide(elId){ document.getElementById(elId).style.display = "none"; }
+
+    /*** SIGNUP FLOW ***/
+    function pickTier(tier){
+      selectedTier = tier;
+      document.getElementById("signupTitle").innerText = `Join ${tier}`;
+      show("signupModal");
+    }
+    function closeSignup(){ hide("signupModal"); }
+
+    function checkOther(){
+      const v = document.getElementById("timePref").value;
+      document.getElementById("otherField").style.display = (v === "Other") ? "block" : "none";
+    }
+
+    function submitSignup(){
+      const first = document.getElementById("firstName").value.trim();
+      const last  = document.getElementById("lastName").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const smsConsent = document.getElementById("smsConsent").checked;
+
+      const lunch = document.getElementById("lunch").value;
+      const time  = document.getElementById("timePref").value;
+      const other = document.getElementById("otherField").value.trim();
+
+      if(!selectedTier){ alert("Pick a club first."); return; }
+      if(!first || !last){ alert("Add first + last name."); return; }
+      if(!lunch){ alert("Select A or B lunch."); return; }
+      if(!time){ alert("Select when you buy."); return; }
+      if(time === "Other" && !other){ alert("Type the class + period."); return; }
+
+      if(phone && !smsConsent){
+        alert('To get texts, check the consent box (you can opt out anytime by replying "STOP").');
+        return;
+      }
+
+      const joined = new Date();
+      const due = new Date(joined.getTime() + SUB_LENGTH_DAYS*24*60*60*1000);
+
+      const data = {
+        id: cryptoId(),
+        tier: selectedTier,
+        first, last,
+        phone,
+        smsConsent,
+        lunch,
+        time,
+        other: (time === "Other") ? other : "",
+        joinedISO: joined.toISOString(),
+        dueISO: due.toISOString(),
+        cancelled: false,
+        cancelledAtISO: "",
+        smsOptedOut: false,
+        perks: perksByTier[selectedTier],
+        perksUsed: {
+          weeklyFreeTreat: false,
+          vipLine: false,
+          secretDrops: false,
+          priority: false
+        }
+      };
+
+      const users = loadUsers();
+      users.push(data);
+      saveUsers(users);
+
+      if (phone && smsConsent){
+        const firstLiner = randomHookLine(first);
+        alert(
+          `${firstLiner}\n\n✅ You’re now receiving restocks + secret treats + stock-up alerts.\nReply STOP to opt out.\n\nWant more perks? Upgrade to ELITE 25 👑`
+        );
+      } else {
+        alert(`You're in ✅\n${selectedTier}\nCancel anytime.`);
+      }
+
+      closeSignup();
+      resetFormFields();
+    }
+
+    function resetFormFields(){
+      document.getElementById("firstName").value="";
+      document.getElementById("lastName").value="";
+      document.getElementById("phone").value="";
+      document.getElementById("smsConsent").checked=false;
+      document.getElementById("lunch").value="";
+      document.getElementById("timePref").value="";
+      document.getElementById("otherField").value="";
+      document.getElementById("otherField").style.display="none";
+    }
+
+    function randomHookLine(name){
+      const hooks = [
+        "Click before we sell out",
+        "You’ve been chosen",
+        "Your access just unlocked",
+        "Don’t miss this week’s drop",
+        "VIP eyes only (for now)",
+        "Lowkey… this one disappears fast"
+      ];
+      const pick = hooks[Math.floor(Math.random()*hooks.length)];
+      return `${name} — ${pick}.`;
+    }
+
+    /*** STORAGE ***/
+    function loadUsers(){ return JSON.parse(localStorage.getItem("drop_users") || "[]"); }
+    function saveUsers(users){ localStorage.setItem("drop_users", JSON.stringify(users)); }
+    function cryptoId(){ return "id_" + Math.random().toString(16).slice(2) + "_" + Date.now(); }
+
+    /*** ADMIN ***/
+    function adminLogin(){
+      const code = document.getElementById("adminCode").value.trim();
+      if(code === ADMIN_CODE){
+        show("adminPanel");
+        loadAdmin();
+        // Ensure DOM is visible before charts try to measure
+        setTimeout(()=>initAdminDashboard(), 0);
+      } else {
+        alert("Wrong code.");
+      }
+    }
+    function closeAdmin(){ hide("adminPanel"); }
+
+    function isExpired(u){
+      if(u.cancelled) return true;
+      return new Date() > new Date(u.dueISO);
+    }
+    function fmt(ts){
+      try { return new Date(ts).toLocaleString(); } catch(e){ return ""; }
+    }
+
+    function loadAdmin(){
+      const users = loadUsers();
+      if(users.length === 0){
+        document.getElementById("adminData").innerHTML = `<div class="table-card">No signups yet.</div>`;
+        return;
+      }
+
+      let html = "";
+      users.forEach((u)=>{
+        const expired = isExpired(u);
+        const status = expired ? "Expired" : "Active";
+        const statusColor = expired ? "rgba(255,59,59,0.95)" : "rgba(56,214,107,0.95)";
+
+        const buyTime = u.time + (u.other ? ` (${u.other})` : "");
+        const canSMS = !!(u.phone && u.smsConsent && !u.smsOptedOut);
+
+        html += `
+          <div class="table-card">
+            <strong>${escapeHtml(u.first)} ${escapeHtml(u.last)}</strong>
+
+            <div class="kv">
+              Tier: <b>${escapeHtml(u.tier)}</b><br>
+              Lunch: <b>${escapeHtml(u.lunch)}</b><br>
+              Buy time: <b>${escapeHtml(buyTime)}</b><br>
+              Joined: <b>${escapeHtml(fmt(u.joinedISO))}</b><br>
+              Due: <b>${escapeHtml(fmt(u.dueISO))}</b><br>
+              Status: <b style="color:${statusColor}">${status}</b><br>
+              Phone: <b>${u.phone ? escapeHtml(u.phone) : "—"}</b><br>
+              SMS Eligible: <b>${canSMS ? "Yes" : "No"}</b>
+            </div>
+
+            <div class="admin-actions">
+              <button class="btn-blue" onclick="renew('${u.id}')">Renew +${SUB_LENGTH_DAYS}d</button>
+              <button class="btn-reset" onclick="toggleCancel('${u.id}')">${u.cancelled ? "Un-cancel" : "Cancel Sub"}</button>
+            </div>
+
+            <div class="admin-actions" style="margin-top:8px;">
+              ${perkButton(u, "weeklyFreeTreat", "Free Treat")}
+              ${perkButton(u, "vipLine", "VIP Line")}
+              ${perkButton(u, "secretDrops", "Secret Drop")}
+              ${perkButton(u, "priority", "Priority")}
+            </div>
+
+            <div class="small-note" style="margin-top:8px;">
+              Note: Basic has no perks to mark “used” except first access (not tracked). VIP/Elite perks are tracked here.
+            </div>
+          </div>
+        `;
+      });
+
+      document.getElementById("adminData").innerHTML = html;
+    }
+
+    function perkButton(u, perkKey, label){
+      if(!u.perks || !u.perks[perkKey]) return "";
+      const used = !!(u.perksUsed && u.perksUsed[perkKey]);
+      const cls = used ? "btn-warn" : "btn-used";
+      const text = used ? `Undo ${label}` : `Mark ${label} Used`;
+      return `<button class="${cls}" onclick="togglePerk('${u.id}','${perkKey}')">${text}</button>`;
+    }
+
+    function togglePerk(id, perkKey){
+      const users = loadUsers();
+      const u = users.find(x=>x.id===id);
+      if(!u) return;
+      if(!u.perks || !u.perks[perkKey]) return;
+
+      if(!u.perksUsed) u.perksUsed = {};
+      u.perksUsed[perkKey] = !u.perksUsed[perkKey];
+
+      saveUsers(users);
+      loadAdmin();
+    }
+
+    function toggleCancel(id){
+      const users = loadUsers();
+      const u = users.find(x=>x.id===id);
+      if(!u) return;
+
+      u.cancelled = !u.cancelled;
+      u.cancelledAtISO = u.cancelled ? new Date().toISOString() : "";
+      saveUsers(users);
+      loadAdmin();
+    }
+
+    function renew(id){
+      const users = loadUsers();
+      const u = users.find(x=>x.id===id);
+      if(!u) return;
+
+      const base = Math.max(Date.now(), new Date(u.dueISO).getTime());
+      u.dueISO = new Date(base + SUB_LENGTH_DAYS*24*60*60*1000).toISOString();
+      u.cancelled = false;
+      u.cancelledAtISO = "";
+      saveUsers(users);
+      loadAdmin();
+    }
+
+    function wipeAll(){
+      const ok = confirm("Wipe ALL signups on this device?");
+      if(!ok) return;
+      localStorage.removeItem("drop_users");
+      localStorage.removeItem("salesLog");
+      localStorage.removeItem("itemsCatalog");
+      localStorage.removeItem("itemRequests");
+      loadAdmin();
+      alert("Device data wiped ✅");
+    }
+
+    /*** TEXT SENDER (CSV generator) ***/
+    function openTextModal(){
+      document.getElementById("textType").value = "new_stock";
+      document.getElementById("audience").value = "all";
+      document.getElementById("itemName").value = "";
+      document.getElementById("itemName").style.display = "none";
+      show("textModal");
+    }
+    function closeTextModal(){ hide("textModal"); }
+    function toggleItemField(){
+      const t = document.getElementById("textType").value;
+      document.getElementById("itemName").style.display = (t === "new_item") ? "block" : "none";
+    }
+
+    function generateTextCSV(){
+      const type = document.getElementById("textType").value;
+      const audience = document.getElementById("audience").value;
+      const itemName = document.getElementById("itemName").value.trim();
+
+      if(type === "new_item" && !itemName){
+        alert("Type the item name first.");
+        return;
+      }
+
+      const users = loadUsers();
+      let targets = users.filter(u => u.phone && u.smsConsent && !u.smsOptedOut);
+
+      if(audience === "vip_plus"){
+        targets = targets.filter(u => u.tier === "VIP" || u.tier === "Elite 25");
+      }
+      if(audience === "elite_only"){
+        targets = targets.filter(u => u.tier === "Elite 25");
+      }
+      if(type === "secret_drop"){
+        targets = targets.filter(u => u.tier === "Elite 25");
+      }
+
+      if(targets.length === 0){
+        alert("No eligible phone numbers for that audience/type.");
+        return;
+      }
+
+      const rows = [["phone","message"]];
+      for(const u of targets){
+        const msg = buildSms(u, type, itemName);
+        rows.push([u.phone, msg]);
+      }
+
+      const csv = rows.map(r => r.map(x => `"${String(x).replaceAll('"','""')}"`).join(",")).join("\n");
+      downloadFile("texts_to_send.csv", csv, "text/csv");
+      alert(`Generated CSV for ${targets.length} texts ✅`);
+      closeTextModal();
+    }
+
+    function buildSms(u, type, itemName){
+      const opener = randomHookLine(u.first);
+      let core = "";
+      if(type === "new_stock"){
+        core = "Restock just landed. Stock up before lunch.";
+      } else if(type === "leaving_soon"){
+        core = "Heads up — stock is leaving soon. Last chance before it’s gone.";
+      } else if(type === "new_item"){
+        core = `New item drop: ${itemName}. Limited amount today.`;
+      } else if(type === "secret_drop"){
+        core = "Secret drop active. Ask for the hidden menu item today.";
+      }
+
+      let upsell = "";
+      if(u.tier === "Basic"){
+        upsell = "Want more perks? Upgrade to VIP for weekly free treats or ELITE 25 for secret drops 👑";
+      } else if(u.tier === "VIP"){
+        upsell = "Level up to ELITE 25 for priority + secret drops 👑";
+      } else {
+        upsell = "Elite status stays undefeated 👑";
+      }
+
+      const stop = 'Reply STOP to opt out.';
+      return `${opener} ${core} ${upsell} ${stop}`;
+    }
+
+    function exportCSV(){
+      const users = loadUsers();
+      const headers = [
+        "Tier","First","Last","Phone","SMSConsent","Lunch","BuyTime","Other","Joined","Due","Expired","Cancelled",
+        "Used_FreeTreat","Used_VIPLine","Used_SecretDrop","Used_Priority"
+      ];
+      const rows = users.map(u=>[
+        u.tier, u.first, u.last, u.phone || "", u.smsConsent ? "Yes":"No",
+        u.lunch, u.time, u.other || "",
+        u.joinedISO, u.dueISO,
+        isExpired(u) ? "Yes":"No",
+        u.cancelled ? "Yes":"No",
+        u.perksUsed?.weeklyFreeTreat ? "Yes":"No",
+        u.perksUsed?.vipLine ? "Yes":"No",
+        u.perksUsed?.secretDrops ? "Yes":"No",
+        u.perksUsed?.priority ? "Yes":"No"
+      ]);
+
+      const csv = [headers, ...rows]
+        .map(r=>r.map(x=>`"${String(x).replaceAll('"','""')}"`).join(","))
+        .join("\n");
+
+      downloadFile("drop_signups.csv", csv, "text/csv");
+    }
+
+    /*** Utils ***/
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+    function downloadFile(filename, content, type){
+      const blob = new Blob([content], {type});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    /*** REQUESTS (student side) ***/
+    function openRequest(){ document.getElementById("requestOverlay").style.display="flex"; }
+    function closeRequest(){ document.getElementById("requestOverlay").style.display="none"; }
+
+    function normItem(s){
+      return (s||"").toLowerCase().replace(/[^a-z0-9\s]/g,"").replace(/\s+/g," ").trim();
+    }
+    function getRequests(){ return JSON.parse(localStorage.getItem("itemRequests")||"[]"); }
+    function setRequests(x){ localStorage.setItem("itemRequests", JSON.stringify(x)); }
+
+    function submitRequest(){
+      const raw = document.getElementById("requestInput").value;
+      const n = normItem(raw);
+      if(!n){ alert("Type an item first"); return; }
+      const reqs = getRequests();
+      reqs.push({ raw, n, ts: Date.now() });
+      setRequests(reqs);
+      document.getElementById("requestInput").value="";
+      closeRequest();
+      alert("Request submitted 👀");
+    }
+
+    /*** SALES + PROFIT + ANALYTICS ***/
+    const DEFAULT_ITEMS = [
+      { key:"redbull_original", name:"Redbull (original)", sell:4.50, units:24, cost:48.67 },
+      { key:"redbull_red", name:"Redbull (red)", sell:4.95, units:24, cost:63.00 },
+      { key:"monster_white", name:"Monster (white)", sell:6.00, units:24, cost:42.48 },
+
+      { key:"coke", name:"Coke (original)", sell:3.00, units:24, cost:14.77 },
+      { key:"fanta", name:"Fanta (original)", sell:3.75, units:24, cost:14.77 },
+      { key:"mtndew", name:"Mtn Dew (original)", sell:5.00, units:24, cost:12.48 },
+
+      { key:"doritos_nacho", name:"Doritos (nacho)", sell:3.75, units:40, cost:19.20 },
+      { key:"doritos_blue", name:"Doritos (blue)", sell:4.25, units:40, cost:19.20 },
+      { key:"funyun", name:"Funyun", sell:4.90, units:40, cost:13.45 },
+      { key:"hot_cheetos", name:"Hot Cheetos", sell:5.00, units:40, cost:31.80 },
+
+      { key:"spearmint", name:"Spearmint", sell:3.00, units:40, cost:18.99 },
+      { key:"hubba", name:"Hubba Bubba", sell:3.75, units:12, cost:11.49 },
+      { key:"ice_breakers", name:"Ice Breakers Cube", sell:6.00, units:100, cost:8.37 },
+    ];
+
+    function loadItems(){
+      const saved = localStorage.getItem("itemsCatalog");
+      return saved ? JSON.parse(saved) : DEFAULT_ITEMS;
+    }
+    function saveItems(items){ localStorage.setItem("itemsCatalog", JSON.stringify(items)); }
+
+    function loadSales(){ return JSON.parse(localStorage.getItem("salesLog")||"[]"); }
+    function saveSales(sales){ localStorage.setItem("salesLog", JSON.stringify(sales)); }
+
+    let items = loadItems();
+    let charts = {};
+
+    function money(x){
+      return (x||0).toLocaleString(undefined,{style:"currency",currency:"USD"});
+    }
+    function unitCost(item){ return item.cost / item.units; }
+
+    function populateSaleDropdown(){
+      const sel = document.getElementById("saleItem");
+      if(!sel) return;
+      items = loadItems();
+      sel.innerHTML = items.map(i => `<option value="${i.key}">${i.name} (${money(i.sell)})</option>`).join("");
+    }
+
+    function renderCostEditor(){
+      const wrap = document.getElementById("costEditor");
+      if(!wrap) return;
+      items = loadItems();
+      wrap.innerHTML = items.map(i => `
+        <div style="display:grid; grid-template-columns: 1.4fr .8fr .8fr; gap:10px; margin-top:10px;">
+          <div class="admin-input" style="display:flex; align-items:center;">${i.name}</div>
+          <input class="admin-input" type="number" step="0.01" id="cost_${i.key}" value="${i.cost}">
+          <input class="admin-input" type="number" step="1" id="units_${i.key}" value="${i.units}">
+        </div>
+        <div style="opacity:.65; font-size:12px; margin-top:4px;">
+          Cost per unit: <b>${money(unitCost(i))}</b> • Sell: <b>${money(i.sell)}</b> • Margin: <b>${money(i.sell - unitCost(i))}</b>
+        </div>
+      `).join("");
+    }
+
+    function saveCosts(){
+      items = loadItems().map(i => ({
+        ...i,
+        cost: parseFloat(document.getElementById(`cost_${i.key}`).value || i.cost),
+        units: parseFloat(document.getElementById(`units_${i.key}`).value || i.units),
+      }));
+      saveItems(items);
+      alert("Saved ✅");
+      refreshAllAdmin();
+    }
+
+    function recordSale(){
+      const key = document.getElementById("saleItem").value;
+      const qty = Math.max(1, parseInt(document.getElementById("saleQty").value||"1",10));
+      const note = (document.getElementById("saleNote").value||"").trim();
+      const item = loadItems().find(i=>i.key===key);
+      if(!item) return;
+
+      const sales = loadSales();
+      sales.push({
+        ts: Date.now(),
+        key,
+        name: item.name,
+        qty,
+        sell: item.sell,
+        costPer: unitCost(item),
+        note
+      });
+      saveSales(sales);
+
+      document.getElementById("saleQty").value = 1;
+      document.getElementById("saleNote").value = "";
+      refreshAllAdmin();
+    }
+
+    function startOfDay(ts){
+      const d = new Date(ts);
+      d.setHours(0,0,0,0);
+      return d.getTime();
+    }
+    function startOfWeek(ts){
+      const d = new Date(ts);
+      const day = d.getDay();
+      const diffToMon = (day === 0 ? -6 : 1 - day);
+      d.setDate(d.getDate() + diffToMon);
+      d.setHours(0,0,0,0);
+      return d.getTime();
+    }
+    function isSellDay(dateObj){
+      const day = dateObj.getDay();
+      return day !== 0 && day !== 6;
+    }
+    function remainingSellDaysThisWeek(nowTs){
+      const now = new Date(nowTs);
+      const weekStart = startOfWeek(nowTs);
+      let count = 0;
+      for(let i=0;i<7;i++){
+        const test = new Date(weekStart + i*86400000);
+        if(test >= new Date(startOfDay(nowTs)) && isSellDay(test)) count++;
+      }
+      return Math.max(1, count);
+    }
+
+    function profitForRange(sales, fromTs, toTs){
+      let rev=0, cogs=0;
+      for(const s of sales){
+        if(s.ts>=fromTs && s.ts<toTs){
+          rev += s.sell * s.qty;
+          cogs += s.costPer * s.qty;
+        }
+      }
+      return { rev, cogs, profit: rev - cogs };
+    }
+
+    function dailyProfitSeries(daysBack=10){
+      const sales = loadSales();
+      const now = Date.now();
+      const series = [];
+      for(let i=daysBack-1;i>=0;i--){
+        const dayStart = startOfDay(now - i*86400000);
+        const dayEnd = dayStart + 86400000;
+        const p = profitForRange(sales, dayStart, dayEnd).profit;
+        series.push({ dayStart, profit:p });
+      }
+      return series;
+    }
+
+    function computeTopRequests(threshold=5){
+      const reqs = getRequests();
+      const map = new Map();
+      for(const r of reqs){
+        const bucket = r.n.slice(0,18);
+        map.set(bucket, (map.get(bucket)||0) + 1);
+      }
+      let best = null;
+      for(const [bucket,count] of map.entries()){
+        if(count>=threshold){
+          if(!best || count>best.count){
+            best = { bucket, count };
+          }
+        }
+      }
+      return best;
+    }
+
+    function renderAdminTicker(){
+      const t = computeTopRequests(5);
+      const el = document.getElementById("adminTicker");
+      if(!el) return;
+      if(!t){ el.style.display="none"; return; }
+      const msg = `${t.count} people requested: “${t.bucket}…” (consider adding it to the menu)`;
+      el.style.display="block";
+      el.setAttribute("data-text", msg + " • " + msg + " • " + msg);
+    }
+
+    function destroyChart(id){
+      if(charts[id]){ charts[id].destroy(); delete charts[id]; }
+    }
+
+    function renderProfitChart(){
+      const ctx = document.getElementById("profitChart");
+      if(!ctx) return;
+      const series = dailyProfitSeries(10);
+      const labels = series.map(x => new Date(x.dayStart).toLocaleDateString());
+      const data = series.map(x => Math.round(x.profit*100)/100);
+
+      destroyChart("profit");
+      charts.profit = new Chart(ctx, {
+        type: "line",
+        data: { labels, datasets: [{ label:"Profit", data }] },
+        options: {
+          responsive:true,
+          plugins:{ legend:{ display:false } },
+          scales:{ y:{ ticks:{ callback:(v)=>"$"+v } } }
+        }
+      });
+    }
+
+    function renderProfitTicker(){
+      const sales = loadSales();
+      const now = Date.now();
+
+      const today = profitForRange(sales, startOfDay(now), startOfDay(now)+86400000);
+      const weekStart = startOfWeek(now);
+      const week = profitForRange(sales, weekStart, weekStart + 7*86400000);
+
+      const ticker = document.getElementById("profitTicker");
+      const meta = document.getElementById("profitMeta");
+      if(!ticker || !meta) return;
+
+      ticker.textContent = money(week.profit);
+      ticker.style.color = week.profit >= 0 ? "#6dff9a" : "#ff6d6d";
+      meta.textContent = `Today: ${money(today.profit)} • Week Revenue: ${money(week.rev)} • Week Cost: ${money(week.cogs)}`;
+
+      const remain = remainingSellDaysThisWeek(now);
+      const needed = week.profit < 0 ? Math.ceil((-week.profit / remain)*100)/100 : 0;
+      const targetEl = document.getElementById("dailyTarget");
+      if(targetEl){
+        targetEl.textContent = needed > 0
+          ? `Today’s target to get back positive (spread over ${remain} sell days): ${money(needed)} profit/day`
+          : `Today’s target: Keep it green ✅ (you’re positive this week)`;
+        targetEl.style.borderColor = week.profit >= 0 ? "rgba(56,214,107,0.18)" : "rgba(255,109,109,0.28)";
+        targetEl.style.background = week.profit >= 0 ? "rgba(56,214,107,0.10)" : "rgba(255,109,109,0.10)";
+      }
+    }
+
+    // For now, MRR charts use your REAL signup storage: drop_users
+    function computeMRR(){
+      const users = loadUsers();
+      const prices = { "basic": 5, "vip": 10, "elite 25": 20 };
+      const now = Date.now();
+      const active = users.filter(u => !isExpired(u));
+      const mrr = active.reduce((sum,u)=> sum + (prices[(u.tier||"").toLowerCase()] || 0), 0);
+      return { activeCount: active.length, mrr };
+    }
+
+    function renderMRRCharts(){
+      const { mrr } = computeMRR();
+
+      const mrrCtx = document.getElementById("mrrChart");
+      if(mrrCtx){
+        destroyChart("mrr");
+        charts.mrr = new Chart(mrrCtx,{
+          type:"bar",
+          data:{ labels:["Start MRR","New","Churn","End MRR"], datasets:[{ data:[mrr, 0, 0, mrr] }] },
+          options:{ plugins:{ legend:{display:false} } }
+        });
+      }
+
+      const nrrCtx = document.getElementById("nrrChart");
+      if(nrrCtx){
+        destroyChart("nrr");
+        const nrr = 1.0;
+        charts.nrr = new Chart(nrrCtx,{
+          type:"bar",
+          data:{ labels:["NRR"], datasets:[{ data:[Math.round(nrr*100)] }] },
+          options:{ plugins:{ legend:{display:false} }, scales:{ y:{ suggestedMax:140, ticks:{ callback:v=>v+"%" } } } }
+        });
+      }
+
+      const gCtx = document.getElementById("growthChart");
+      if(gCtx){
+        destroyChart("growth");
+        charts.growth = new Chart(gCtx,{
+          type:"line",
+          data:{ labels:["Now"], datasets:[{ data:[mrr], label:"MRR" }] },
+          options:{ plugins:{ legend:{display:false} } }
+        });
+      }
+
+      const hotCtx = document.getElementById("hotChart");
+      if(hotCtx){
+        const sales = loadSales();
+        const counts = new Map();
+        for(const s of sales){
+          counts.set(s.name, (counts.get(s.name)||0) + s.qty);
+        }
+        const sorted = [...counts.entries()].sort((a,b)=>b[1]-a[1]).slice(0,8);
+        destroyChart("hot");
+        charts.hot = new Chart(hotCtx,{
+          type:"bar",
+          data:{ labels: sorted.map(x=>x[0]), datasets:[{ data: sorted.map(x=>x[1]) }] },
+          options:{ plugins:{ legend:{display:false} } }
+        });
+      }
+    }
+
+    function toggleAnalytics(){
+      const p = document.getElementById("analyticsPanel");
+      if(!p) return;
+      p.style.display = (!p.style.display || p.style.display==="none") ? "block" : "none";
+      if(p.style.display==="block"){
+        showTab("mrr");
+        renderMRRCharts();
+      }
+    }
+
+    function showTab(name){
+      ["mrr","nrr","growth","hot"].forEach(k=>{
+        const el = document.getElementById("tab-"+k);
+        if(el) el.style.display = (k===name) ? "block" : "none";
+      });
+    }
+
+    function refreshAllAdmin(){
+      populateSaleDropdown();
+      renderCostEditor();
+      renderProfitTicker();
+      renderProfitChart();
+      renderAdminTicker();
+      const p = document.getElementById("analyticsPanel");
+      if(p && p.style.display==="block") renderMRRCharts();
+    }
+
+    function initAdminDashboard(){
+      refreshAllAdmin();
+    }
+  </script>
 </body>
 </html>
