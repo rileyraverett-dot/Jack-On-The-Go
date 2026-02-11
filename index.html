@@ -509,6 +509,58 @@ to { transform: translateY(260px); } /* slow falling */
 0%,100% { opacity: 0.35; }
 50% { opacity: 0.70; }
 }
+  .menu-deal{
+margin-top:10px;
+padding:10px 12px;
+border-radius:14px;
+background: rgba(56,214,107,0.12);
+border:1px solid rgba(56,214,107,0.28);
+font-weight:800;
+font-size:13px;
+}
+
+.menu-section{
+margin-top:14px;
+padding:12px;
+border-radius:16px;
+background: rgba(0,0,0,0.28);
+border: 1px solid rgba(255,255,255,0.10);
+}
+
+.menu-h{
+font-weight:900;
+letter-spacing:0.2px;
+margin-bottom:8px;
+font-size:14px;
+}
+
+.menu-item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:8px 0;
+border-top:1px solid rgba(255,255,255,0.08);
+font-size:13px;
+color: rgba(255,255,255,0.86);
+}
+.menu-item:first-of-type{ border-top:none; }
+.menu-item b{
+color: white;
+font-weight:900;
+}
+
+.menu-close{
+margin-top:14px;
+width:100%;
+border:none;
+border-radius:14px;
+padding:12px 12px;
+font-weight:900;
+cursor:pointer;
+color: var(--text);
+background: rgba(255,255,255,0.10);
+border: 1px solid rgba(255,255,255,0.18);
+}
 </style>
 </head>
 
@@ -541,25 +593,53 @@ to { transform: translateY(260px); } /* slow falling */
 <!-- MENU BUTTON (right before clubs) -->
 <button class="menu-btn" onclick="toggleMenu()">☰ Menu</button>
 
+<!-- MENU BUTTON (right before clubs) -->
+<button class="menu-btn" onclick="toggleMenu()">🍬 Menu</button>
+
 <!-- MENU PANEL -->
 <div id="menuPanel" class="menu-panel">
 <div class="menu-stars"></div>
-<div class="menu-inner">
-<div class="menu-title">Drop Menu</div>
-<div class="menu-sub">Fast links + info</div>
 
-<div class="menu-links">
-<button class="menu-link" onclick="scrollToClubs(); toggleMenu(false)">⭐ Clubs</button>
-<button class="menu-link" onclick="show('signupModal'); toggleMenu(false)">📝 Join</button>
-<button class="menu-link" onclick="toggleMenu(false); alert('VIP: Free treat weekly • Elite: Secret drops + priority')">🎁 Perks</button>
-<button class="menu-link" onclick="toggleMenu(false); alert('Cancel anytime. No lock-in.')">✅ Cancel Anytime</button>
+<div class="menu-inner">
+<div class="menu-title">SNACK MENU</div>
+<div class="menu-sub">Drinks • Snacks • Gum</div>
+
+<div class="menu-deal">🥤 Drinks Deal: <b>Buy 2 get 1 free</b></div>
+
+<div class="menu-section">
+<div class="menu-h">⚡ Energy</div>
+<div class="menu-item"><span>Redbull (original)</span><b>$4.50</b></div>
+<div class="menu-item"><span>Redbull (red)</span><b>$4.95</b></div>
+<div class="menu-item"><span>Monster (white)</span><b>$6</b></div>
 </div>
+
+<div class="menu-section">
+<div class="menu-h">🥤 Soda</div>
+<div class="menu-item"><span>Coke (original)</span><b>$3</b></div>
+<div class="menu-item"><span>Fanta (original)</span><b>$3.75</b></div>
+<div class="menu-item"><span>Mtn Dew (original)</span><b>$5</b></div>
+</div>
+
+<div class="menu-section">
+<div class="menu-h">🔥 Snacks</div>
+<div class="menu-item"><span>Doritos (nacho)</span><b>$3.75</b></div>
+<div class="menu-item"><span>Doritos (blue)</span><b>$4.25</b></div>
+<div class="menu-item"><span>Funyun</span><b>$4.90</b></div>
+<div class="menu-item"><span>Hot Cheetos</span><b>$5</b></div>
+</div>
+
+<div class="menu-section">
+<div class="menu-h">🧊 Gum</div>
+<div class="menu-item"><span>Spearmint</span><b>$3</b></div>
+<div class="menu-item"><span>Hubba Bubba</span><b>$3.75</b></div>
+<div class="menu-item"><span>Ice Breakers Cube</span><b>$6</b></div>
+</div>
+
+<button class="menu-close" onclick="toggleMenu(false)">Close</button>
 </div>
 </div>
 
 <div class="section-title">Choose your club</div>
-    
-    <div class="section-title">Choose your club</div>
 
     <div class="tiers">
       <div class="tier basic">
